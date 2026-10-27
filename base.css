@@ -1,0 +1,80 @@
+/* Token contract (plan §5.1). Inputs set by theme.js; everything else derived. */
+:root {
+  --color-brand-primary: #4a3fb8;
+  --color-brand-accent: #f59e0b;
+  --font-heading: system-ui, sans-serif; --font-body: system-ui, sans-serif; --font-weight-heading: 700;
+  --radius-card: 14px; --radius-btn: 10px;
+  --color-brand-primary-hover: color-mix(in oklab, var(--color-brand-primary) 85%, black);
+  --color-brand-primary-mid: color-mix(in oklab, var(--color-brand-primary) 75%, white);
+  --color-brand-dark: color-mix(in oklab, var(--color-brand-primary) 55%, black);
+  --color-brand-darkest: color-mix(in oklab, var(--color-brand-primary) 25%, black);
+  --color-brand-light: color-mix(in oklab, var(--color-brand-primary) 8%, white);
+  --color-brand-light-alt: color-mix(in oklab, var(--color-brand-accent) 10%, white);
+  --color-brand-cta: var(--color-brand-accent);
+  --ink: #1b1b24; --muted: #5d5d6b; --line: #e6e6ee;
+}
+* { box-sizing: border-box; margin: 0 }
+body { font: 16px/1.55 var(--font-body); color: var(--ink); background: #fff }
+h1, h2, h3 { font-family: var(--font-heading); font-weight: var(--font-weight-heading); line-height: 1.1; color: var(--color-brand-primary) }
+a { color: inherit; text-decoration: none }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px }
+.sec { padding: 64px 0 }
+.btn { display: inline-block; padding: 12px 22px; border-radius: var(--radius-btn); font-weight: 700; background: var(--color-brand-primary); color: #fff; border: 2px solid var(--color-brand-primary) }
+.btn:hover { background: var(--color-brand-primary-hover) }
+.btn.cta { background: var(--color-brand-cta); border-color: var(--color-brand-cta); color: var(--ink) }
+.btn.ghost { background: none; color: var(--color-brand-primary) }
+.card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-card); padding: 24px }
+.tag { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--color-brand-primary-mid) }
+.ph { background: linear-gradient(135deg, var(--color-brand-primary-mid), var(--color-brand-accent)); border-radius: var(--radius-card); min-height: 280px }
+.muted { color: var(--muted) }
+.grid { display: grid; gap: 20px }
+.g2 { grid-template-columns: repeat(2, 1fr) } .g3 { grid-template-columns: repeat(3, 1fr) }
+header.h { border-bottom: 1px solid var(--line) }
+header.h .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; padding-bottom: 18px; gap: 16px; flex-wrap: wrap }
+header.h nav { display: flex; gap: 22px; font-weight: 600; font-size: 15px }
+.logo { font: var(--font-weight-heading) 22px var(--font-heading); color: var(--color-brand-primary) }
+.logo b { color: var(--color-brand-accent) }
+header.centered .wrap { flex-direction: column }
+.hero-pad { padding: 72px 0 }
+.light { background: var(--color-brand-light) }
+.dark { background: var(--color-brand-darkest); color: #fff }
+.dark h2, .dark h3, .dark .logo { color: #fff }
+footer > .wrap { padding-top: 40px; padding-bottom: 40px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap }
+.stars { color: var(--color-brand-accent); letter-spacing: 2px }
+.bento { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px }
+.bento .card:first-child { grid-column: span 2; grid-row: span 2; background: var(--color-brand-primary); color: #fff }
+.bento .card:first-child h3 { color: #fff }
+.row { display: flex; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--line); gap: 16px }
+@media (max-width: 720px) { .g2, .g3, .bento { grid-template-columns: 1fr } .bento .card:first-child { grid-column: auto; grid-row: auto } header.h nav { display: none } }
+
+/* ---- imagery ---- */
+.pic { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: var(--radius-card) }
+.frame-img { position: relative; min-height: 340px } .frame-img .pic { position: absolute; inset: 0 }
+.bgimg { position: relative; background-size: cover; background-position: center; color: #fff; isolation: isolate }
+.bgimg::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, color-mix(in oklab, var(--color-brand-darkest) 88%, transparent), color-mix(in oklab, var(--color-brand-darkest) 45%, transparent)) }
+.bgimg h1, .bgimg h2, .bgimg h3 { color: #fff }
+.bgimg .tag { color: #fff; opacity: .85 }
+.simg { aspect-ratio: 16/10; overflow: hidden; border-radius: var(--radius-card) var(--radius-card) 0 0 }
+.simg .pic { border-radius: 0; transition: transform .4s } .scard:hover .simg .pic { transform: scale(1.05) }
+.scard { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden }
+.scard .b { padding: 18px 20px 22px } .scard h3 { font-size: 19px; margin: 6px 0 4px }
+.ovl { position: relative; overflow: hidden; border-radius: var(--radius-card); color: #fff; min-height: 150px; isolation: isolate }
+.ovl .pic { position: absolute; inset: 0; z-index: -2; border-radius: 0 } .ovl::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, color-mix(in oklab, var(--color-brand-darkest) 85%, transparent), transparent 70%) }
+.ovl .t { position: absolute; left: 18px; right: 18px; bottom: 16px } .ovl h3 { color: #fff; font-size: 20px }
+.bento .ovl { min-height: 0 }
+.faq details { border-bottom: 1px solid var(--line); padding: 18px 0 }
+.faq summary { cursor: pointer; font: var(--font-weight-heading) 18px var(--font-heading); color: var(--color-brand-primary); list-style: none; display: flex; justify-content: space-between; gap: 16px }
+.faq summary::after { content: "+"; font-size: 24px; line-height: 1; color: var(--color-brand-accent) } .faq details[open] summary::after { content: "–" }
+.faq details p { margin-top: 10px; color: var(--muted); max-width: 640px }
+.avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--color-brand-primary); color: #fff; display: grid; place-items: center; font-weight: 700; flex: none }
+.avatar.lg { width: 84px; height: 84px; font-size: 28px; margin-bottom: 14px; background: linear-gradient(135deg, var(--color-brand-primary-mid), var(--color-brand-accent)) }
+.who { display: flex; gap: 12px; align-items: center; margin-top: 14px }
+.cta-band { padding: 72px 0; text-align: center } .cta-band h2 { font-size: 36px; margin-bottom: 10px } .cta-band p { max-width: 520px; margin: 0 auto 22px; opacity: .9 }
+.fcols { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; padding: 48px 0 }
+.fcols h4 { margin-bottom: 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em } .fcols a, .fcols p { display: block; margin-bottom: 6px; opacity: .85; font-size: 14px }
+.fbar { border-top: 1px solid #ffffff22; padding: 18px 0; font-size: 13px; opacity: .7; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap }
+footer.light .fbar { border-color: var(--line) }
+footer.photo { display: grid; grid-template-columns: 1fr 1.4fr }
+footer.photo > .pimg { position: relative; min-height: 280px } footer.photo > .pimg .pic { position: absolute; inset: 0; border-radius: 0 }
+@media (max-width: 720px) { .fcols, footer.photo { grid-template-columns: 1fr } }
+footer.photo > .wrap { display: block; margin: 0; max-width: none; align-self: center; padding-top: 40px; padding-bottom: 0 }

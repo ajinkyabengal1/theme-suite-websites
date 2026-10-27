@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="base.css"><body></body>
+<script type="module">
+import { render, templates, DEFAULT_CONTENT } from './templates.js';
+const q = new URLSearchParams(location.search), key = templates[q.get('t')] ? q.get('t') : 'compass', page = q.get('p') || 'home';
+let C = DEFAULT_CONTENT;
+const draw = () => document.body.innerHTML = render(key, page, C);
+draw();
+// Brand try-on + content channel (plan §5.4): shell posts CSS vars and page content.
+addEventListener('message', e => {
+  const { vars, content } = e.data || {};
+  if (vars) for (const [k, v] of Object.entries(vars)) document.documentElement.style.setProperty(k, v);
+  if (content) { C = { ...DEFAULT_CONTENT, ...content }; draw(); }
+});
+parent.postMessage({ type: 'ready', page }, '*');
+</script>

@@ -1,0 +1,158 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Theme Suite Demo</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px system-ui,sans-serif;background:#eceef3;color:#1b1b24}
+button{font:inherit;cursor:pointer}[hidden]{display:none!important}
+/* gallery */
+#gallery{max-width:1240px;margin:0 auto;padding:32px 24px}
+#gallery h1{font-size:34px;margin:0 0 6px}.s{color:#666;margin:0}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:22px 0}
+.chip{border:1px solid #ccd;background:#fff;border-radius:99px;padding:7px 16px}.chip.on{background:#1b1b24;color:#fff;border-color:#1b1b24}
+.tools input{margin-left:auto;padding:9px 14px;border:1px solid #ccd;border-radius:99px;min-width:240px;font:inherit}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,340px);gap:22px;justify-content:center}
+.dc{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px #0001}
+.th{width:340px;height:230px;overflow:hidden;border-bottom:1px solid #eee}
+.th iframe{width:1200px;height:812px;border:0;transform:scale(.2833);transform-origin:0 0;pointer-events:none}
+.dc div.m{padding:14px 16px 16px}.dc .c{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#777}
+.dc h3{margin:2px 0 4px;font-size:18px}.dc p{margin:0 0 12px;color:#666}
+.go{display:inline-block;background:#4a3fb8;color:#fff;border-radius:8px;padding:8px 14px;text-decoration:none;font-weight:600}
+/* customise */
+#cust{display:grid;grid-template-columns:340px 1fr;height:100vh}
+aside{background:#fff;padding:20px;overflow:auto;border-right:1px solid #ddd}
+aside h1{font-size:20px;margin:6px 0 2px}aside h2{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:22px 0 8px}
+.back{color:#4a3fb8;text-decoration:none;font-weight:600}
+.pre{display:flex;flex-wrap:wrap;gap:6px}.pre button,.seg button{border:1px solid #ccd;background:#fff;border-radius:8px;padding:7px 10px}
+.pre button{display:flex;gap:6px;align-items:center}.pre i{width:12px;height:12px;border-radius:50%}
+.seg{display:flex;gap:6px}.seg button{flex:1}.on{border-color:#4a3fb8!important;box-shadow:0 0 0 2px #4a3fb833}
+.cp{display:flex;gap:10px;align-items:center;margin-bottom:8px}.cp input{width:44px;height:34px;padding:0;border:0;background:none}
+.chk{padding:8px 10px;border-radius:8px;background:#eef;margin-top:8px}.bad{background:#fee}
+.f{display:block;margin-bottom:10px;color:#555}.f input,.f textarea{display:block;width:100%;margin-top:3px;padding:8px;border:1px solid #ccd;border-radius:6px;font:inherit}
+.grp{display:none}.grp.show{display:block}
+main{display:flex;flex-direction:column;padding:16px;gap:10px;min-width:0}
+.bar{display:flex;gap:8px;justify-content:space-between;align-items:center}
+.dev button{border:1px solid #ccd;background:#fff;border-radius:6px;padding:5px 10px}
+.frame{flex:1;display:flex;justify-content:center;min-height:0}
+iframe#f{width:100%;height:100%;border:0;background:#fff;border-radius:10px;box-shadow:0 6px 30px #0002}
+</style>
+<section id="gallery">
+  <h1>Design Suite <small style="font-weight:400;font-size:16px;color:#666">demo</small></h1>
+  <p class="s">Pick a starting design, then try your brand and edit your Home, About and Contact pages live.</p>
+  <div class="tools"><span id="cats"></span><input id="q" placeholder="Search designs by name"><span class="s" id="count"></span></div>
+  <div class="cards" id="cards"></div>
+</section>
+<section id="cust" hidden>
+<aside>
+  <a class="back" href="#/">← All designs</a>
+  <h1 id="dname"></h1><p class="s" id="dblurb"></p>
+  <h2>Page to edit</h2><div class="seg" id="pages"></div>
+  <h2>Brand</h2>
+  <div class="pre" id="pre"></div>
+  <div class="cp" style="margin-top:12px"><input type="color" id="primary"><span>Primary</span></div>
+  <div class="cp"><input type="color" id="accent"><span>Accent</span></div>
+  <div class="chk" id="chk"></div>
+  <h2>Font</h2><div class="seg" id="font"></div>
+  <h2>Corners</h2><div class="seg" id="radius"></div>
+  <h2>Content</h2>
+  <div class="grp" data-g="all">
+    <label class="f">Pharmacy name<input data-c="name"></label>
+    <label class="f">Phone<input data-c="phone"></label>
+    <label class="f">Address<input data-c="address"></label>
+  </div>
+  <div class="grp" data-g="home"><label class="f">Headline<textarea rows="2" data-c="tagline"></textarea></label></div>
+  <div class="grp" data-g="about">
+    <label class="f">About title<input data-c="aboutTitle"></label>
+    <label class="f">About text (blank line = new paragraph)<textarea rows="6" data-c="aboutBody"></textarea></label>
+    <label class="f">Team (one per line: Name — Role)<textarea rows="4" data-c="team"></textarea></label>
+  </div>
+  <div class="grp" data-g="contact">
+    <label class="f">Intro<textarea rows="3" data-c="contactIntro"></textarea></label>
+    <label class="f">Email<input data-c="email"></label>
+    <label class="f">Opening hours<input data-c="hours"></label>
+  </div>
+  <div class="seg" style="margin-top:6px"><button id="reset">Reset content</button><button id="copy">Copy spec JSON</button></div>
+  <div class="seg" style="margin-top:6px"><button id="dl">Download spec</button></div>
+</aside>
+<main>
+  <div class="bar"><b id="title"></b><span class="dev"><button data-w="100%">Desktop</button> <button data-w="768px">Tablet</button> <button data-w="390px">Mobile</button></span></div>
+  <div class="frame"><iframe id="f" title="Template preview"></iframe></div>
+</main>
+</section>
+<script type="module">
+import { FONTS, RADII, PRESETS, toVars, contrast, fixPrimary } from './theme.js';
+import { templates, CATEGORIES, DEFAULT_CONTENT } from './templates.js';
+const $ = id => document.getElementById(id), f = $('f');
+let s = { key: null, page: 'home', primary: '#4a3fb8', accent: '#f59e0b', font: 'clean', radius: 'soft', content: { ...DEFAULT_CONTENT } };
+try { Object.assign(s, JSON.parse(localStorage.suite)) } catch {}
+const save = () => { try { localStorage.suite = JSON.stringify(s) } catch {} };
+
+/* ---------- gallery ---------- */
+let cat = 'All', term = '';
+$('cats').innerHTML = ['All', ...CATEGORIES].map(c => `<button class="chip" data-c="${c}">${c}</button>`).join(' ');
+$('cats').onclick = e => { if (e.target.dataset.c) { cat = e.target.dataset.c; drawGallery() } };
+$('q').oninput = e => { term = e.target.value.toLowerCase(); drawGallery() };
+const entries = Object.entries(templates);
+$('cards').innerHTML = entries.map(([k, t]) => `<div class="dc" data-k="${k}" data-cat="${t.cat}">
+  <div class="th"><iframe data-k="${k}" data-thumb scrolling="no" loading="lazy" src="template.html?t=${k}" tabindex="-1" title="${t.label}"></iframe></div>
+  <div class="m"><div class="c">${t.cat}</div><h3>${t.label}</h3><p>${t.blurb}</p><a class="go" href="#/d/${k}">Customise</a></div></div>`).join('');
+function drawGallery() {
+  let n = 0;
+  document.querySelectorAll('.dc').forEach(d => {
+    const ok = (cat === 'All' || d.dataset.cat === cat) && templates[d.dataset.k].label.toLowerCase().includes(term);
+    d.hidden = !ok; n += ok;
+  });
+  $('count').textContent = `${n} of ${entries.length}`;
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c.dataset.c === cat));
+}
+
+/* ---------- customise ---------- */
+const btns = (el, obj, label, set) => { el.innerHTML = Object.entries(obj).map(([k, v]) => `<button data-k="${k}">${label(k, v)}</button>`).join(''); el.onclick = e => { const k = e.target.closest('button')?.dataset.k; if (k) { set(k); sync() } } };
+btns($('pre'), PRESETS, (k, p) => `<i style="background:${p.primary}"></i>${k}`, k => Object.assign(s, PRESETS[k]));
+btns($('font'), FONTS, (k, v) => v.label, k => s.font = k);
+btns($('radius'), RADII, k => k, k => s.radius = k);
+btns($('pages'), { home: 'Home', about: 'About', contact: 'Contact' }, (k, v) => v, k => { s.page = k; load() });
+$('primary').oninput = e => { s.primary = e.target.value; sync() };
+$('accent').oninput = e => { s.accent = e.target.value; sync() };
+const fields = () => document.querySelectorAll('[data-c]:is(input,textarea)');
+fields().forEach(i => i.oninput = () => { s.content[i.dataset.c] = i.value; sync() });
+document.querySelectorAll('[data-w]').forEach(b => b.onclick = () => f.style.width = b.dataset.w);
+$('reset').onclick = () => { s.content = { ...DEFAULT_CONTENT }; fill(); sync() };
+const spec = () => { const { primary, accent, font, radius, content } = s; return JSON.stringify({ template: s.key, primary, accent, fontPreset: font, radius, content }, null, 2) };
+$('copy').onclick = () => navigator.clipboard.writeText(spec());
+$('dl').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([spec()], { type: 'application/json' })); a.download = `${s.key}-spec.json`; a.click(); URL.revokeObjectURL(a.href) };
+const fill = () => fields().forEach(i => i.value = s.content[i.dataset.c] ?? '');
+const load = () => { f.src = `template.html?t=${s.key}&p=${s.page}`; sync() };
+const push = () => f.contentWindow?.postMessage({ vars: toVars(s), content: s.content }, '*');
+
+function sync() {
+  s.primary = fixPrimary(s.primary);                                   // AA auto-adjust
+  const cr = contrast(s.primary, '#ffffff');
+  $('primary').value = s.primary; $('accent').value = s.accent;
+  $('chk').className = 'chk' + (cr < 4.5 ? ' bad' : '');
+  $('chk').textContent = `Primary vs white: ${cr.toFixed(1)}:1 ${cr >= 4.5 ? '✓ AA' : '✗ fails AA'}`;
+  for (const [id, v] of [['font', s.font], ['radius', s.radius], ['pages', s.page]]) $(id).querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.k === v));
+  document.querySelectorAll('.grp').forEach(g => g.classList.toggle('show', g.dataset.g === 'all' || g.dataset.g === s.page));
+  $('title').textContent = `${templates[s.key].label} · ${s.page} page`;
+  save(); push();
+}
+
+/* ---------- router ---------- */
+function route() {
+  const m = location.hash.match(/^#\/d\/(\w+)/), k = m && templates[m[1]] ? m[1] : null;
+  $('gallery').hidden = !!k; $('cust').hidden = !k;
+  if (!k) return drawGallery();
+  if (s.key !== k) s = { ...s, key: k, page: 'home', ...templates[k].theme };   // new design = its default brand, keep content
+  $('dname').textContent = templates[k].label; $('dblurb').textContent = templates[k].blurb;
+  fill(); load();
+}
+addEventListener('hashchange', route);
+
+// iframes announce 'ready'; reply with the right theme. Thumbnails get their design's defaults.
+addEventListener('message', e => {
+  if (e.data?.type !== 'ready') return;
+  const fr = [...document.querySelectorAll('iframe')].find(i => i.contentWindow === e.source);
+  if (!fr) return;
+  if (fr.dataset.thumb !== undefined) e.source.postMessage({ vars: toVars(templates[fr.dataset.k].theme) }, '*');
+  else { s.page = e.data.page; sync() }                                // in-page nav links update the tab, push theme + content
+});
+route();
+</script>
