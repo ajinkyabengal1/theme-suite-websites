@@ -38,18 +38,50 @@ export const lum = h => { const [r, g, b] = rgb(h).map(lin); return .2126 * r + 
 export const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); };
 const darken = (h, t) => '#' + rgb(h).map(v => Math.round(v * (1 - t)).toString(16).padStart(2, '0')).join('');
 
+const hexOf = c => '#' + c.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+const mix = (a, b, t) => hexOf(rgb(a).map((v, i) => v * (1 - t) + rgb(b)[i] * t)); // sRGB approximation of base.css color-mix(); base.css uses oklab
+const shift = (h, to, ok) => { let n = 0; while (!ok(h) && n++ < 40) h = mix(h, to, .06); return h; };
+
 // Auto-adjust: darken primary until white text on it passes AA (4.5:1).
 export function fixPrimary(h) {
   let n = 0; while (contrast(h, '#ffffff') < 4.5 && n++ < 40) h = darken(h, .05);
   return h;
 }
+// Auto-adjust: move accent toward white until the dark CTA label (INK) passes AA.
+export const fixAccent = h => shift(h, '#ffffff', c => contrast(c, INK) >= 4.5);
 
-// Only primary/accent/fonts/radius are inputs; hover/light/dark/etc are derived in base.css via color-mix().
-export function toVars({ primary, accent, font, radius }) {
-  const f = FONTS[font], r = RADII[radius];
+// Light/dark appearance. Surface + text tokens are set inline so the preview switches without reloading.
+export const MODES = { light: 'Light', dark: 'Dark' };
+const INK = '#1b1b24', SURFACE = { light: '#ffffff', dark: '#14141c' };
+// Brand colour as text on the page surface: primary itself in light mode, lightened until AA in dark mode.
+export const textOn = (h, mode) => shift(h, '#ffffff', c => contrast(c, SURFACE[mode]) >= 4.5);
+const accentText = (a, mode) => mode === 'dark' ? textOn(a, 'dark') : shift(a, '#000000', c => contrast(c, SURFACE.light) >= 4.5);
+
+// Every pairing the preview relies on: [label, foreground, background, fixable by fixAccent/fixPrimary].
+export function a11yChecks({ primary, accent, mode = 'light' }) {
+  const rows = [
+    ['Button text on primary', '#ffffff', primary, 'primary'],
+    ['Call-to-action label on accent', INK, accent, 'accent'],
+    ['Headings and links on page', textOn(primary, mode), SURFACE[mode], null],
+    ['Accent text on page', accentText(accent, mode), SURFACE[mode], null],
+    ['Footer and dark sections', '#ffffff', mix(primary, '#000000', .75), null],
+  ];
+  return rows.map(([label, fg, bg, fix]) => ({ label, ratio: contrast(fg, bg), fix }));
+}
+
+// Only primary/accent/fonts/radius/mode are inputs; hover/light/dark/etc are derived in base.css via color-mix().
+export function toVars({ primary, accent, font, radius, mode = 'light' }) {
+  const f = FONTS[font], r = RADII[radius], d = mode === 'dark';
   return {
     '--color-brand-primary': primary, '--color-brand-accent': accent,
     '--font-heading': f.heading, '--font-body': f.body, '--font-weight-heading': f.weight,
     '--radius-card': r[0], '--radius-btn': r[1],
+    'color-scheme': mode,
+    '--surface': SURFACE[mode], '--surface-2': d ? '#1d1d28' : '#ffffff',
+    '--ink': d ? '#ececf4' : INK, '--muted': d ? '#a9a9bb' : '#50505e', '--line': d ? '#2c2c3a' : '#e6e6ee',
+    '--heading': textOn(primary, mode), '--tag': d ? textOn(primary, mode) : 'color-mix(in oklab, var(--color-brand-primary) 85%, black)',
+    '--color-brand-accent-text': accentText(accent, mode),
+    '--color-brand-light': `color-mix(in oklab, var(--color-brand-primary) ${d ? 18 : 8}%, ${SURFACE[mode]})`,
+    '--color-brand-light-alt': `color-mix(in oklab, var(--color-brand-accent) ${d ? 14 : 10}%, ${SURFACE[mode]})`,
   };
 }

@@ -1,315 +1,1564 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Theme Suite Demo</title><link rel="icon" href="data:,"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400..800&family=Nunito:wght@400..800&family=Plus+Jakarta+Sans:wght@400..800&family=Poppins:wght@400;600;700&display=swap">
-<style>
-*{box-sizing:border-box}body{margin:0;font:14px system-ui,sans-serif;background:#eceef3;color:#1b1b24}
-button,select{font:inherit}button{cursor:pointer}[hidden]{display:none!important}
-/* gallery */
-#gallery{max-width:1116px;margin:0 auto;padding:40px 24px 64px}
-.gh{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
-#gallery h1{font-size:36px;letter-spacing:-.02em;margin:0 0 6px}.s{color:#666;margin:0}
-.tb{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#fff;border:1px solid #e3e5ee;border-radius:14px;padding:10px 12px;margin-bottom:24px}
-.cats{position:relative;display:flex;gap:4px;flex-wrap:wrap;background:#eef0f6;border-radius:10px;padding:3px}
-.chip{border:0;background:transparent;border-radius:8px;padding:8px 16px;color:#4b4f63;font-weight:600;transition:color .2s}.chip.on{color:#1b1b24}
-.sr{display:flex;align-items:center;gap:12px}
-.sbox{position:relative}.sbox svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#8a8ea3}
-.sbox input{padding:10px 14px 10px 36px;border:1px solid #dfe1ea;border-radius:10px;min-width:260px;font:14px system-ui;background:#fbfbfd}
-.sbox input:focus{outline:3px solid #4a3fb822;border-color:#4a3fb8}
-.shl{border:1px solid #dfe1ea;background:#fff;border-radius:10px;padding:9px 14px;font-weight:600;color:#33364a}.shl.on{background:#fdecf1;border-color:#e9a3b8;color:#a31446}
-.sl{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #e3e5ee;border-radius:12px;padding:10px 14px;margin:-8px 0 24px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,340px);gap:24px;justify-content:space-between}
-.dc{display:flex;flex-direction:column;background:#fff;border:1px solid #e3e5ee;border-radius:16px;overflow:hidden;position:relative;transition:transform .15s,box-shadow .15s}
-.dc:hover{transform:translateY(-3px);box-shadow:0 12px 32px #1b1b2418}
-.th{width:338px;height:226px;overflow:hidden;border-bottom:1px solid #eceef5;background:#f5f6fa}
-.th iframe{width:1200px;height:800px;border:0;transform:scale(.2817);transform-origin:0 0;pointer-events:none}
-.fav{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:0;background:#fffe;font-size:17px;box-shadow:0 1px 6px #0003;color:#c0204f}
-.dc div.m{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column}.dc .go{margin-top:auto}.dc .c{display:flex;align-items:center;gap:6px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#777;font-weight:600}
-.dc .c i{width:8px;height:8px;border-radius:50%}
-.dc h3{margin:4px 0 4px;font-size:19px}.dc p{margin:0 0 12px;color:#666;line-height:1.45}
-.lh{display:flex;gap:6px;margin-bottom:14px;font-size:11px}.lh b{border-radius:6px;padding:3px 7px;background:#e3f6e8;color:#116b2a;font-weight:600}.lh b.mid{background:#fff3d6;color:#8a5a00}
-.go{display:flex;align-items:center;justify-content:center;gap:8px;background:#e0e2f8;color:#3b46d4;border-radius:10px;padding:11px 16px;text-decoration:none;font-weight:600;transition:background .15s}.go::after{content:"→";transition:transform .15s}.go:hover{background:#d2d5f4}.go:hover::after{transform:translateX(3px)}
-.empty{text-align:center;color:#777;padding:60px 0}
-/* customise */
-#cust{display:grid;grid-template-columns:380px 1fr;height:100vh}
-aside{background:#f5f6fa;overflow:auto;border-right:1px solid #e1e3ec;display:flex;flex-direction:column;padding-bottom:0}
-.ah{padding:20px 20px 6px}.back{color:#4a3fb8;text-decoration:none;font-weight:600;font-size:13px}
-aside h1{font-size:22px;margin:10px 0 2px;letter-spacing:-.01em}.s{color:#666;margin:0}
-.cardx{background:#fff;border:1px solid #e3e5ee;border-radius:14px;padding:16px;margin:12px 16px 0}
-.cardx>h2{font-size:14px;font-weight:700;margin:0 0 2px;color:#1b1b24}
-.hint,.note{margin:0 0 12px;font-size:12px;line-height:1.45;color:#6b6f80}
-.lbl{font-size:12px;font-weight:600;color:#33364a;margin:14px 0 6px}
-.seg{position:relative;display:flex;background:#eef0f6;border-radius:10px;padding:3px;gap:2px}
-.seg button{flex:1;border:0;background:transparent;border-radius:8px;padding:8px 6px;color:#4b4f63;font-weight:600;transition:color .2s}
-.seg button.on{color:#1b1b24}
-.seg button,.chip{position:relative;z-index:1}
-.thumb{position:absolute;top:3px;bottom:3px;left:0;width:0;background:#fff;border-radius:8px;box-shadow:0 1px 3px #0002;transition:transform .28s cubic-bezier(.4,0,.2,1),width .28s cubic-bezier(.4,0,.2,1);z-index:0;pointer-events:none}
-.pre{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.pre button,.opts button{display:flex;align-items:center;gap:8px;border:1px solid #e0e2ec;background:#fff;border-radius:9px;padding:8px 10px;text-align:left;font-size:13px;color:#1b1b24}
-.pre button.on,.opts button.on{border-color:#4a3fb8;background:#f1efff}
-.dual{width:18px;height:18px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px #0002}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.opts button{padding:10px;font-size:15px}
-.rd{width:14px;height:14px;border-radius:50%;border:2px solid #b5b9c9;flex:none}.on>.rd{border:4px solid #4a3fb8}
-.cf{display:flex;gap:10px;align-items:center}
-.cf input[type=color]{width:46px;height:46px;border:1px solid #dfe1ea;border-radius:10px;padding:3px;background:#fff;cursor:pointer;flex:none}
-.cf input[type=text],.f input,.f textarea{width:100%;padding:11px 12px;border:1px solid #dfe1ea;border-radius:10px;font:14px system-ui;color:#1b1b24;background:#fbfbfd}
-.cf input[type=text]{flex:1;font-family:ui-monospace,Menlo,monospace;text-transform:lowercase}
-.cf input:focus,.f input:focus,.f textarea:focus{outline:3px solid #4a3fb822;border-color:#4a3fb8}
-.chk{display:flex;gap:8px;margin-top:14px;padding:9px 12px;border-radius:10px;background:#e8f6ee;color:#116b2a;font-weight:600;font-size:13px}.chk.bad{background:#fdecec;color:#a11d1d}
-.logo-row{display:flex;gap:10px;align-items:center;margin-bottom:4px}
-.up{border:1px dashed #b9bdd0;background:#fafafe;border-radius:10px;padding:10px 14px;font-weight:600;color:#33364a}
-.logo-row img{max-height:40px;max-width:110px;border:1px solid #e0e2ec;border-radius:8px;padding:3px}
-.lnk{background:none;border:0;text-decoration:underline;color:#4b4f63;padding:6px 2px}
-.f{display:block;font-size:12px;font-weight:600;color:#33364a;margin-bottom:12px}.f input,.f textarea{display:block;margin-top:6px;font-weight:400}.f textarea{resize:vertical}
-.grp{display:none}.grp.show{display:block}
-.sec{display:flex;align-items:center;gap:10px;border:1px solid #e0e2ec;border-radius:9px;padding:10px 12px;margin-bottom:6px;font-size:14px;background:#fff;cursor:grab;user-select:none}
-.sec:focus-visible{outline:3px solid #4a3fb822;border-color:#4a3fb8}.sec.drag{opacity:.4}.sec label{flex:1;cursor:pointer}
-.grip{color:#9aa0b4;font-size:16px;line-height:1}.sec input{accent-color:#4a3fb8;margin-right:8px}
-.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.acts button{border:1px solid #dfe1ea;background:#fff;border-radius:10px;padding:10px 8px;font-weight:600;color:#33364a}.acts button:hover{background:#f6f6fb}
-.af{position:sticky;bottom:0;margin-top:auto;background:#f5f6fa;border-top:1px solid #e1e3ec;padding:12px 16px 16px}
-.af .cta{width:100%;padding:13px;border:0;border-radius:12px;background:#e0e2f8;color:#3b46d4;font-weight:700;font-size:15px;transition:background .15s}.af .cta:hover{background:#d2d5f4}
-.gap{height:16px}
-main{display:flex;flex-direction:column;padding:18px 24px 24px;gap:14px;min-width:0}
-.bar{display:flex;gap:12px;justify-content:space-between;align-items:center}.bar b{font-size:15px}
-.devwrap{display:flex;align-items:center;gap:12px}.size{font-size:12px;color:#6b6f80;font-variant-numeric:tabular-nums;background:#fff;border:1px solid #e3e5ee;border-radius:8px;padding:5px 10px}.dev{width:340px}
-.frame{flex:1;display:flex;justify-content:center;min-height:0}
-.fw{display:flex;max-width:100%;width:100%;height:100%;transition:width .2s}
-.fw iframe{flex:1;min-width:0;height:100%;border:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px #0002}
-dialog{border:0;border-radius:14px;padding:22px;width:380px;box-shadow:0 10px 50px #0005}dialog::backdrop{background:#0006}
-dialog label{display:block;margin-bottom:10px;font-weight:600;font-size:12px}dialog input{width:100%;padding:10px;margin-top:5px;border:1px solid #dfe1ea;border-radius:10px;font:14px system-ui}
-dialog .acts button.primary{background:#e0e2f8;color:#3b46d4;border-color:#e0e2f8}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1b1b24;color:#fff;padding:10px 18px;border-radius:99px;z-index:9}
-</style>
-<section id="gallery">
-  <div class="gh"><div><h1>Design Suite</h1><p class="s">Pick a starting design, then try your brand and edit your Home, About and Contact pages live.</p></div></div>
-  <div class="tb"><div class="cats" id="cats"></div>
-    <div class="sr"><span class="s" id="count"></span><button class="shl" id="favchip"></button>
-      <label class="sbox"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search designs by name" aria-label="Search designs"></label></div></div>
-  <div class="sl" id="sl" hidden><span id="slcount"></span><button class="go" id="slsend" style="border:0">Send shortlist enquiry</button><button class="lnk" id="slclear" style="background:none;border:0;text-decoration:underline;color:#4b4f63">Clear</button></div>
-  <div class="cards" id="cards"></div><p class="empty" id="empty" hidden>No designs match. Try another category or search.</p>
-</section>
-<section id="cust" hidden>
-<aside>
-  <div class="ah"><a class="back" href="#/">← All designs</a><h1 id="dname"></h1><p class="s" id="dblurb"></p></div>
-  <div class="cardx"><h2>Page</h2><p class="hint">Choose the page you want to preview and edit.</p><div class="seg" id="pages"></div></div>
-  <div class="cardx"><h2>Logo &amp; colours</h2><p class="note" id="logoNote">Upload a logo and we pick your colours from it.</p>
-    <div class="logo-row"><button class="up" id="logoBtn">Upload logo</button><img id="logoPrev" alt="" hidden><button class="lnk" id="logoDel" hidden>Remove</button></div>
-    <input type="file" id="logoFile" accept="image/*" hidden>
-    <p class="lbl">Brand presets</p><div class="pre" id="pre"></div>
-    <p class="lbl">Primary colour</p><div class="cf"><input type="color" id="primary" aria-label="Primary colour"><input type="text" id="primaryHex" maxlength="7" spellcheck="false" aria-label="Primary hex"></div>
-    <p class="lbl">Accent colour</p><div class="cf"><input type="color" id="accent" aria-label="Accent colour"><input type="text" id="accentHex" maxlength="7" spellcheck="false" aria-label="Accent hex"></div>
-    <div class="chk" id="chk"></div></div>
-  <div class="cardx"><h2>Typography &amp; shape</h2><p class="hint">Font presets and corner style.</p>
-    <div class="opts" id="font"></div><p class="lbl">Corners</p><div class="seg" id="radius"></div></div>
-  <div class="cardx"><h2>Content</h2><p class="hint">Changes appear in the preview as you type.</p>
-    <div class="grp" data-g="all">
-      <label class="f">Pharmacy name<input data-c="name"></label>
-      <label class="f">Phone<input data-c="phone"></label>
-      <label class="f">Address<input data-c="address"></label>
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  />
+  <title>Theme Suite Demo</title
+  ><link rel="icon" href="data:," /><link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400..800&family=Nunito:wght@400..800&family=Plus+Jakarta+Sans:wght@400..800&family=Poppins:wght@400;600;700&display=swap"
+  />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font:
+        14px system-ui,
+        sans-serif;
+      background: #eceef3;
+      color: #1b1b24;
+    }
+    button,
+    select {
+      font: inherit;
+    }
+    label[for="switch"] {
+      display: block;
+      margin-top: 14px;
+    }
+    .dd {
+      position: relative;
+      margin-top: 6px;
+    }
+    #switch {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid #dfe1ea;
+      border-radius: 10px;
+      background: #fff;
+      font-weight: 600;
+      text-align: left;
+    }
+    #switch::after {
+      content: "";
+      margin-left: auto;
+      width: 8px;
+      height: 8px;
+      border: solid #6b6f85;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform 0.15s;
+    }
+    #switch[aria-expanded="true"] {
+      border-color: #4a3fb8;
+      outline: 3px solid #4a3fb822;
+    }
+    #switch[aria-expanded="true"]::after {
+      transform: rotate(-135deg);
+    }
+    .ddl {
+      position: absolute;
+      z-index: 20;
+      left: 0;
+      right: 0;
+      top: calc(100% + 6px);
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 6px;
+      background: #fff;
+      border: 1px solid #dfe1ea;
+      border-radius: 12px;
+      box-shadow: 0 12px 32px #1b1b2426;
+    }
+    .ddl h3 {
+      margin: 8px 8px 4px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6f85;
+    }
+    .ddl button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      border: 0;
+      border-radius: 8px;
+      background: none;
+      font: inherit;
+      text-align: left;
+    }
+    .ddl button:hover,
+    .ddl button:focus-visible {
+      background: #f1f2fb;
+      outline: 0;
+    }
+    .ddl button[aria-selected="true"] {
+      background: #e0e2f8;
+      font-weight: 700;
+    }
+    #chk {
+      margin-top: 14px;
+    }
+    button {
+      cursor: pointer;
+    }
+    [hidden] {
+      display: none !important;
+    }
+    /* gallery */
+    #gallery {
+      max-width: 1116px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    .gh {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    #gallery h1 {
+      font-size: 36px;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+    }
+    .s {
+      color: #666;
+      margin: 0;
+    }
+    .tb {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #e3e5ee;
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 24px;
+    }
+    .cats {
+      position: relative;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      background: #eef0f6;
+      border-radius: 10px;
+      padding: 3px;
+    }
+    .chip {
+      border: 0;
+      background: transparent;
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: #4b4f63;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .chip.on {
+      color: #1b1b24;
+    }
+    .sr {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sbox {
+      position: relative;
+    }
+    .sbox svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8a8ea3;
+    }
+    .sbox input {
+      padding: 10px 14px 10px 36px;
+      border: 1px solid #dfe1ea;
+      border-radius: 10px;
+      min-width: 260px;
+      font: 14px system-ui;
+      background: #fbfbfd;
+    }
+    .sbox input:focus {
+      outline: 3px solid #4a3fb822;
+      border-color: #4a3fb8;
+    }
+    .shl {
+      border: 1px solid #dfe1ea;
+      background: #fff;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-weight: 600;
+      color: #33364a;
+    }
+    .shl.on {
+      background: #fdecf1;
+      border-color: #e9a3b8;
+      color: #a31446;
+    }
+    .sl {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #e3e5ee;
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin: -8px 0 24px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 340px);
+      gap: 24px;
+      justify-content: space-between;
+    }
+    .dc {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid #e3e5ee;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      transition:
+        transform 0.15s,
+        box-shadow 0.15s;
+    }
+    .dc:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px #1b1b2418;
+    }
+    .th {
+      width: 338px;
+      height: 226px;
+      overflow: hidden;
+      border-bottom: 1px solid #eceef5;
+      background: #f5f6fa;
+    }
+    .th iframe {
+      width: 1200px;
+      height: 800px;
+      border: 0;
+      transform: scale(0.2817);
+      transform-origin: 0 0;
+      pointer-events: none;
+    }
+    .fav {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 0;
+      background: #fffe;
+      font-size: 17px;
+      box-shadow: 0 1px 6px #0003;
+      color: #c0204f;
+    }
+    .dc div.m {
+      padding: 16px 18px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .dc .go {
+      margin-top: auto;
+    }
+    .dc .c {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #777;
+      font-weight: 600;
+    }
+    .dc .c i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .dc h3 {
+      margin: 4px 0 4px;
+      font-size: 19px;
+    }
+    .dc p {
+      margin: 0 0 12px;
+      color: #666;
+      line-height: 1.45;
+    }
+    .lh {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      font-size: 11px;
+    }
+    .lh b {
+      border-radius: 6px;
+      padding: 3px 7px;
+      background: #e3f6e8;
+      color: #116b2a;
+      font-weight: 600;
+    }
+    .lh b.mid {
+      background: #fff3d6;
+      color: #8a5a00;
+    }
+    .go {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #e0e2f8;
+      color: #3b46d4;
+      border-radius: 10px;
+      padding: 11px 16px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .go::after {
+      content: "→";
+      transition: transform 0.15s;
+    }
+    .go:hover {
+      background: #d2d5f4;
+    }
+    .go:hover::after {
+      transform: translateX(3px);
+    }
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 60px 0;
+    }
+    /* customise */
+    #cust {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      height: 100vh;
+    }
+    aside {
+      background: #f5f6fa;
+      overflow: auto;
+      border-right: 1px solid #e1e3ec;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 0;
+    }
+    .ah {
+      padding: 20px 20px 6px;
+    }
+    .back {
+      color: #4a3fb8;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    aside h1 {
+      font-size: 22px;
+      margin: 10px 0 2px;
+      letter-spacing: -0.01em;
+    }
+    .s {
+      color: #666;
+      margin: 0;
+    }
+    .cardx {
+      background: #fff;
+      border: 1px solid #e3e5ee;
+      border-radius: 14px;
+      padding: 16px;
+      margin: 12px 16px 0;
+    }
+    .cardx > h2 {
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0 0 2px;
+      color: #1b1b24;
+    }
+    .hint,
+    .note {
+      margin: 0 0 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #6b6f80;
+    }
+    .lbl {
+      font-size: 12px;
+      font-weight: 600;
+      color: #33364a;
+      margin: 14px 0 6px;
+    }
+    .seg {
+      position: relative;
+      display: flex;
+      background: #eef0f6;
+      border-radius: 10px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .seg button {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      border-radius: 8px;
+      padding: 8px 6px;
+      color: #4b4f63;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .seg button.on {
+      color: #1b1b24;
+    }
+    .seg button,
+    .chip {
+      position: relative;
+      z-index: 1;
+    }
+    .thumb {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 0;
+      width: 0;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px #0002;
+      transition:
+        transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .pre {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .pre button,
+    .opts button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #e0e2ec;
+      background: #fff;
+      border-radius: 9px;
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 13px;
+      color: #1b1b24;
+    }
+    .pre button.on,
+    .opts button.on {
+      border-color: #4a3fb8;
+      background: #f1efff;
+    }
+    .dual {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      flex: none;
+      box-shadow: inset 0 0 0 1px #0002;
+    }
+    .opts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .opts button {
+      padding: 10px;
+      font-size: 15px;
+    }
+    .rd {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #b5b9c9;
+      flex: none;
+    }
+    .on > .rd {
+      border: 4px solid #4a3fb8;
+    }
+    .cf {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .cf input[type="color"] {
+      width: 46px;
+      height: 46px;
+      border: 1px solid #dfe1ea;
+      border-radius: 10px;
+      padding: 3px;
+      background: #fff;
+      cursor: pointer;
+      flex: none;
+    }
+    .cf input[type="text"],
+    .f input,
+    .f textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #dfe1ea;
+      border-radius: 10px;
+      font: 14px system-ui;
+      color: #1b1b24;
+      background: #fbfbfd;
+    }
+    .cf input[type="text"] {
+      flex: 1;
+      font-family: ui-monospace, Menlo, monospace;
+      text-transform: lowercase;
+    }
+    .cf input:focus,
+    .f input:focus,
+    .f textarea:focus {
+      outline: 3px solid #4a3fb822;
+      border-color: #4a3fb8;
+    }
+    .chk {
+      display: flex;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      background: #e8f6ee;
+      color: #116b2a;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .chk span {
+      margin-left: auto;
+      font-variant-numeric: tabular-nums;
+    }
+    .chk + .chk {
+      margin-top: 6px;
+    }
+    .chk.bad {
+      background: #fdecec;
+      color: #a11d1d;
+    }
+    .logo-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .up {
+      border: 1px dashed #b9bdd0;
+      background: #fafafe;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 600;
+      color: #33364a;
+    }
+    .logo-row img {
+      max-height: 40px;
+      max-width: 110px;
+      border: 1px solid #e0e2ec;
+      border-radius: 8px;
+      padding: 3px;
+    }
+    .lnk {
+      background: none;
+      border: 0;
+      text-decoration: underline;
+      color: #4b4f63;
+      padding: 6px 2px;
+    }
+    .f {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #33364a;
+      margin-bottom: 12px;
+    }
+    .f input,
+    .f textarea {
+      display: block;
+      margin-top: 6px;
+      font-weight: 400;
+    }
+    .f textarea {
+      resize: vertical;
+    }
+    .grp {
+      display: none;
+    }
+    .grp.show {
+      display: block;
+    }
+    .sec {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #e0e2ec;
+      border-radius: 9px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      font-size: 14px;
+      background: #fff;
+      cursor: grab;
+      user-select: none;
+    }
+    .sec:focus-visible {
+      outline: 3px solid #4a3fb822;
+      border-color: #4a3fb8;
+    }
+    .sec.drag {
+      opacity: 0.4;
+    }
+    .sec label {
+      flex: 1;
+      cursor: pointer;
+    }
+    .grip {
+      color: #9aa0b4;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .sec input {
+      accent-color: #4a3fb8;
+      margin-right: 8px;
+    }
+    .acts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .acts button {
+      border: 1px solid #dfe1ea;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 8px;
+      font-weight: 600;
+      color: #33364a;
+    }
+    .acts button:hover {
+      background: #f6f6fb;
+    }
+    .af {
+      position: sticky;
+      bottom: 0;
+      margin-top: auto;
+      background: #f5f6fa;
+      border-top: 1px solid #e1e3ec;
+      padding: 12px 16px 16px;
+    }
+    .af .cta {
+      width: 100%;
+      padding: 13px;
+      border: 0;
+      border-radius: 12px;
+      background: #e0e2f8;
+      color: #3b46d4;
+      font-weight: 700;
+      font-size: 15px;
+      transition: background 0.15s;
+    }
+    .af .cta:hover {
+      background: #d2d5f4;
+    }
+    .gap {
+      height: 16px;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      padding: 18px 24px 24px;
+      gap: 14px;
+      min-width: 0;
+    }
+    .bar {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bar b {
+      font-size: 15px;
+    }
+    .devwrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .size {
+      font-size: 12px;
+      color: #6b6f80;
+      font-variant-numeric: tabular-nums;
+      background: #fff;
+      border: 1px solid #e3e5ee;
+      border-radius: 8px;
+      padding: 5px 10px;
+    }
+    .dev {
+      width: 340px;
+    }
+    .frame {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      min-height: 0;
+    }
+    .fw {
+      display: flex;
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
+      transition: width 0.2s;
+    }
+    .fw iframe {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      border: 0;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px #0002;
+    }
+    dialog {
+      border: 0;
+      border-radius: 14px;
+      padding: 22px;
+      width: 380px;
+      box-shadow: 0 10px 50px #0005;
+    }
+    dialog::backdrop {
+      background: #0006;
+    }
+    dialog label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    dialog input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #dfe1ea;
+      border-radius: 10px;
+      font: 14px system-ui;
+    }
+    dialog .acts button.primary {
+      background: #e0e2f8;
+      color: #3b46d4;
+      border-color: #e0e2f8;
+    }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1b1b24;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 99px;
+      z-index: 9;
+    }
+  </style>
+  <section id="gallery">
+    <div class="gh">
+      <div>
+        <h1>Design Suite</h1>
+        <p class="s">
+          Pick a starting design, then try your brand and edit your Home, About
+          and Contact pages live.
+        </p>
+      </div>
     </div>
-    <div class="grp" data-g="home">
-      <label class="f">Headline<textarea rows="2" data-c="tagline"></textarea></label>
-      <p class="lbl">Home sections <span style="font-weight:400;color:#6b6f80">· drag to reorder</span></p><div id="secs"></div>
+    <div class="tb">
+      <div class="cats" id="cats"></div>
+      <div class="sr">
+        <span class="s" id="count"></span
+        ><button class="shl" id="favchip"></button>
+        <label class="sbox"
+          ><svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" /></svg
+          ><input
+            id="q"
+            placeholder="Search designs by name"
+            aria-label="Search designs"
+        /></label>
+      </div>
     </div>
-    <div class="grp" data-g="about">
-      <label class="f">About title<input data-c="aboutTitle"></label>
-      <label class="f">About text (blank line = new paragraph)<textarea rows="6" data-c="aboutBody"></textarea></label>
-      <label class="f">Team (one per line: Name — Role)<textarea rows="4" data-c="team"></textarea></label>
+    <div class="sl" id="sl" hidden>
+      <span id="slcount"></span
+      ><button class="go" id="slsend" style="border: 0">
+        Send shortlist enquiry</button
+      ><button
+        class="lnk"
+        id="slclear"
+        style="
+          background: none;
+          border: 0;
+          text-decoration: underline;
+          color: #4b4f63;
+        "
+      >
+        Clear
+      </button>
     </div>
-    <div class="grp" data-g="contact">
-      <label class="f">Intro<textarea rows="3" data-c="contactIntro"></textarea></label>
-      <label class="f">Email<input data-c="email"></label>
-      <label class="f">Opening hours<input data-c="hours"></label>
-    </div></div>
-  <div class="cardx"><h2>Share &amp; export</h2><p class="hint">Send this design to a colleague or keep a spec sheet.</p>
-    <div class="acts"><button id="share">Copy share link</button><button id="print">Print / PDF spec</button><button id="dl">Download spec</button><button id="copy">Copy spec JSON</button></div>
-    <button class="lnk" id="reset" style="margin-top:8px">Reset content</button></div>
-  <div class="gap"></div>
-  <div class="af"><button class="cta" id="demo">Book a demo</button></div>
-</aside>
-<main>
-  <div class="bar"><b id="title"></b><span class="devwrap"><span class="size" id="size" aria-live="polite"></span><span class="seg dev" id="dev"><button data-w="100%" class="on">Desktop</button><button data-w="1280px">Laptop</button><button data-w="768px">Tablet</button><button data-w="390px">Mobile</button></span></span></div>
-  <div class="frame"><div class="fw" id="fw"><iframe id="f" title="Template preview"></iframe></div></div>
-</main>
-</section>
-<dialog id="dlg"><form method="dialog" id="dform"><h3 style="margin-top:0">Book a demo</h3>
-  <p class="note">We'll open your email app with your design and brand details filled in.</p>
-  <label>Your name<input id="dn" required></label><label>Pharmacy<input id="dp"></label>
-  <div class="acts"><button value="cancel" type="button" id="dc">Cancel</button><button class="primary" id="dgo">Open email</button></div></form></dialog>
-<script type="module">
-import { FONTS, RADII, PRESETS, toVars, contrast, fixPrimary } from './theme.js';
-import { templates, CATEGORIES, DEFAULT_CONTENT, DEFAULT_SERVICES, DEFAULT_SECTIONS } from './templates.js';
-import { loadLogo, encodeState, decodeState, shareable, sanitizeShared, specHTML } from './tools.js';
-// ponytail: no lead endpoint exists in this demo, so "Book a demo" and the shortlist open an email draft.
-// Set LEAD_TO to the sales address, or swap mailto for a POST to the existing Healthya lead flow.
-const LEAD_TO = '';
-const $ = id => document.getElementById(id), f = $('f');
-const clone = o => JSON.parse(JSON.stringify(o));
-const read = (k, d) => { try { return JSON.parse(localStorage[k]) ?? d } catch { return d } };
-const write = (k, v) => { try { localStorage[k] = JSON.stringify(v) } catch {} };
-const toast = m => { const t = Object.assign(document.createElement('div'), { className: 'toast', textContent: m }); document.body.append(t); setTimeout(() => t.remove(), 2400) };
-const mailto = (subject, body) => `mailto:${LEAD_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-let s = { key: null, page: 'home', primary: '#4a3fb8', accent: '#f59e0b', font: 'clean', radius: 'soft', logo: '', content: clone(DEFAULT_CONTENT), services: clone(DEFAULT_SERVICES), sections: clone(DEFAULT_SECTIONS), ...read('suite', {}) };
-s.services = clone(DEFAULT_SERVICES);   // services are not editable any more; ignore anything saved earlier
-const save = () => write('suite', s);
+    <div class="cards" id="cards"></div>
+    <p class="empty" id="empty" hidden>
+      No designs match. Try another category or search.
+    </p>
+  </section>
+  <section id="cust" hidden>
+    <aside>
+      <div class="ah">
+        <a class="back" href="#/">← All designs</a>
+        <h1 id="dname"></h1>
+        <p class="s" id="dblurb"></p>
+        <label class="lbl" for="switch">Switch design (keeps your brand, logo and content)</label>
+        <div class="dd">
+          <button type="button" id="switch" aria-haspopup="listbox" aria-expanded="false"></button>
+          <div class="ddl" id="switchlist" role="listbox" aria-label="Designs" hidden></div>
+        </div>
+        <button class="lnk" id="own" style="margin-top: 6px">
+          Use this design's own colours and fonts
+        </button>
+      </div>
+      <div class="cardx">
+        <h2>Page</h2>
+        <p class="hint">Choose the page you want to preview and edit.</p>
+        <div class="seg" id="pages"></div>
+      </div>
+      <div class="cardx">
+        <h2>Logo &amp; colours</h2>
+        <p class="note" id="logoNote">
+          Upload a logo and we pick your colours from it.
+        </p>
+        <div class="logo-row">
+          <button class="up" id="logoBtn">Upload logo</button
+          ><img id="logoPrev" alt="" hidden /><button
+            class="lnk"
+            id="logoDel"
+            hidden
+          >
+            Remove
+          </button>
+        </div>
+        <input type="file" id="logoFile" accept="image/*" hidden />
+        <p class="lbl">Brand presets</p>
+        <div class="pre" id="pre"></div>
+        <p class="lbl">Primary colour</p>
+        <div class="cf">
+          <input type="color" id="primary" aria-label="Primary colour" /><input
+            type="text"
+            id="primaryHex"
+            maxlength="7"
+            spellcheck="false"
+            aria-label="Primary hex"
+          />
+        </div>
+        <p class="lbl">Accent colour</p>
+        <div class="cf">
+          <input type="color" id="accent" aria-label="Accent colour" /><input
+            type="text"
+            id="accentHex"
+            maxlength="7"
+            spellcheck="false"
+            aria-label="Accent hex"
+          />
+        </div>
+        <div id="chk" aria-live="polite"></div>
+        <button class="lnk" id="fixall" hidden>Fix failing colours</button>
+      </div>
+      <div class="cardx">
+        <h2>Typography &amp; shape</h2>
+        <p class="hint">Font presets and corner style.</p>
+        <div class="opts" id="font"></div>
+        <p class="lbl">Appearance</p>
+        <div class="seg" id="mode"></div>
+        <p class="lbl">Corners</p>
+        <div class="seg" id="radius"></div>
+      </div>
+      <div class="cardx">
+        <h2>Content</h2>
+        <p class="hint">Changes appear in the preview as you type.</p>
+        <div class="grp" data-g="all">
+          <label class="f">Pharmacy name<input data-c="name" /></label>
+          <label class="f">Phone<input data-c="phone" /></label>
+          <label class="f">Address<input data-c="address" /></label>
+        </div>
+        <div class="grp" data-g="home">
+          <label class="f"
+            >Headline<textarea rows="2" data-c="tagline"></textarea>
+          </label>
+          <p class="lbl">
+            Home sections
+            <span style="font-weight: 400; color: #6b6f80"
+              >· drag to reorder</span
+            >
+          </p>
+          <div id="secs"></div>
+        </div>
+        <div class="grp" data-g="about">
+          <label class="f">About title<input data-c="aboutTitle" /></label>
+          <label class="f"
+            >About text (blank line = new paragraph)<textarea
+              rows="6"
+              data-c="aboutBody"
+            ></textarea>
+          </label>
+          <label class="f"
+            >Team (one per line: Name — Role)<textarea
+              rows="4"
+              data-c="team"
+            ></textarea>
+          </label>
+        </div>
+        <div class="grp" data-g="contact">
+          <label class="f"
+            >Intro<textarea rows="3" data-c="contactIntro"></textarea>
+          </label>
+          <label class="f">Email<input data-c="email" /></label>
+          <label class="f">Opening hours<input data-c="hours" /></label>
+        </div>
+      </div>
+      <div class="cardx">
+        <h2>Share &amp; export</h2>
+        <p class="hint">
+          Send this design to a colleague or keep a spec sheet.
+        </p>
+        <div class="acts">
+          <button id="share">Copy share link</button
+          ><button id="print">Print / PDF spec</button
+          ><button id="dl">Download spec</button
+          ><button id="copy">Copy spec JSON</button>
+        </div>
+        <button class="lnk" id="reset" style="margin-top: 8px">
+          Reset content
+        </button>
+      </div>
+      <div class="gap"></div>
+      <div class="af"><button class="cta" id="demo">Book a demo</button></div>
+    </aside>
+    <main>
+      <div class="bar">
+        <b id="title"></b
+        ><span class="devwrap"
+          ><span class="size" id="size" aria-live="polite"></span
+          ><span class="seg dev" id="dev"
+            ><button data-w="100%" class="on">Desktop</button
+            ><button data-w="1280px">Laptop</button
+            ><button data-w="768px">Tablet</button
+            ><button data-w="390px">Mobile</button></span
+          ></span
+        >
+      </div>
+      <div class="frame">
+        <div class="fw" id="fw">
+          <iframe id="f" title="Template preview"></iframe>
+        </div>
+      </div>
+    </main>
+  </section>
+  <dialog id="dlg">
+    <form method="dialog" id="dform">
+      <h3 style="margin-top: 0">Book a demo</h3>
+      <p class="note">
+        We'll open your email app with your design and brand details filled in.
+      </p>
+      <label>Your name<input id="dn" required /></label
+      ><label>Pharmacy<input id="dp" /></label>
+      <div class="acts">
+        <button value="cancel" type="button" id="dc">Cancel</button
+        ><button class="primary" id="dgo">Open email</button>
+      </div>
+    </form>
+  </dialog>
+  <script type="module">
+    import {
+      FONTS,
+      RADII,
+      PRESETS,
+      toVars,
+      MODES,
+      fixPrimary,
+      fixAccent,
+      a11yChecks,
+    } from "./theme.js";
+    import {
+      templates,
+      CATEGORIES,
+      DEFAULT_CONTENT,
+      DEFAULT_SERVICES,
+      DEFAULT_SECTIONS,
+    } from "./templates.js";
+    import {
+      loadLogo,
+      encodeState,
+      decodeState,
+      shareable,
+      sanitizeShared,
+      specHTML,
+    } from "./tools.js";
+    // ponytail: no lead endpoint exists in this demo, so "Book a demo" and the shortlist open an email draft.
+    // Set LEAD_TO to the sales address, or swap mailto for a POST to the existing Healthya lead flow.
+    const LEAD_TO = "";
+    const $ = (id) => document.getElementById(id),
+      f = $("f");
+    const clone = (o) => JSON.parse(JSON.stringify(o));
+    const read = (k, d) => {
+      try {
+        return JSON.parse(localStorage[k]) ?? d;
+      } catch {
+        return d;
+      }
+    };
+    const write = (k, v) => {
+      try {
+        localStorage[k] = JSON.stringify(v);
+      } catch {}
+    };
+    const toast = (m) => {
+      const t = Object.assign(document.createElement("div"), {
+        className: "toast",
+        textContent: m,
+      });
+      document.body.append(t);
+      setTimeout(() => t.remove(), 2400);
+    };
+    const mailto = (subject, body) =>
+      `mailto:${LEAD_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    let s = {
+      key: null,
+      page: "home",
+      primary: "#4a3fb8",
+      accent: "#f59e0b",
+      font: "clean",
+      radius: "soft",
+      mode: "light",
+      logo: "",
+      content: clone(DEFAULT_CONTENT),
+      services: clone(DEFAULT_SERVICES),
+      sections: clone(DEFAULT_SECTIONS),
+      ...read("suite", {}),
+    };
+    s.services = clone(DEFAULT_SERVICES); // services are not editable any more; ignore anything saved earlier
+    const save = () => write("suite", s);
 
-/* ---------- gallery ---------- */
-let cat = 'All', term = '', favOnly = false, favs = read('favs', []), scores = {};
-fetch('scores.json').then(r => r.ok ? r.json() : {}).then(j => { scores = j; drawCards() }).catch(() => {});
-const entries = Object.entries(templates);
-$('cats').innerHTML = ['All', ...CATEGORIES].map(c => `<button class="chip" data-c="${c}">${c}</button>`).join(' ');
-$('cats').onclick = e => { if (e.target.dataset.c) { cat = e.target.dataset.c; drawGallery() } };
-$('q').oninput = e => { term = e.target.value.toLowerCase(); drawGallery() };
-$('favchip').onclick = () => { favOnly = !favOnly; drawGallery() };
-$('slclear').onclick = () => { favs = []; write('favs', favs); drawCards() };
-$('slsend').onclick = () => location.href = mailto('Design shortlist enquiry', `I'd like to talk about these designs:\n\n${favs.map(k => `- ${templates[k].label} (${templates[k].cat})`).join('\n')}\n`);
-const pill = (l, v) => `<b class="${v < 90 ? 'mid' : ''}">${l} ${v}</b>`;
-function drawCards() {
-  $('cards').innerHTML = entries.map(([k, t]) => { const sc = scores[k];
-    return `<div class="dc" data-k="${k}">
-    <button class="fav" data-fav="${k}" title="Shortlist" aria-label="Shortlist ${t.label}">${favs.includes(k) ? '♥' : '♡'}</button>
+    /* ---------- gallery ---------- */
+    let cat = "All",
+      term = "",
+      favOnly = false,
+      favs = read("favs", []),
+      scores = {};
+    fetch("scores.json")
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((j) => {
+        scores = j;
+        drawCards();
+      })
+      .catch(() => {});
+    const entries = Object.entries(templates);
+    $("cats").innerHTML = ["All", ...CATEGORIES]
+      .map((c) => `<button class="chip" data-c="${c}">${c}</button>`)
+      .join(" ");
+    $("cats").onclick = (e) => {
+      if (e.target.dataset.c) {
+        cat = e.target.dataset.c;
+        drawGallery();
+      }
+    };
+    $("q").oninput = (e) => {
+      term = e.target.value.toLowerCase();
+      drawGallery();
+    };
+    $("favchip").onclick = () => {
+      favOnly = !favOnly;
+      drawGallery();
+    };
+    $("slclear").onclick = () => {
+      favs = [];
+      write("favs", favs);
+      drawCards();
+    };
+    $("slsend").onclick = () =>
+      (location.href = mailto(
+        "Design shortlist enquiry",
+        `I'd like to talk about these designs:\n\n${favs.map((k) => `- ${templates[k].label} (${templates[k].cat})`).join("\n")}\n`,
+      ));
+    const pill = (l, v) => `<b class="${v < 90 ? "mid" : ""}">${l} ${v}</b>`;
+    function drawCards() {
+      $("cards").innerHTML = entries
+        .map(([k, t]) => {
+          const sc = scores[k];
+          return `<div class="dc" data-k="${k}">
+    <button class="fav" data-fav="${k}" title="Shortlist" aria-label="Shortlist ${t.label}">${favs.includes(k) ? "♥" : "♡"}</button>
     <div class="th"><iframe data-k="${k}" data-thumb scrolling="no" loading="lazy" src="template.html?t=${k}" tabindex="-1" title="${t.label}"></iframe></div>
     <div class="m"><div class="c"><i style="background:${t.theme.primary}"></i>${t.cat}</div><h3>${t.label}</h3><p>${t.blurb}</p>
-    ${sc ? `<div class="lh" title="Lighthouse, measured ${sc.measured} (${sc.mode})">${pill('Perf', sc.performance)}${pill('A11y', sc.accessibility)}${pill('BP', sc.bestPractices)}${pill('SEO', sc.seo)}</div>` : ''}
-    <a class="go" href="#/d/${k}">Customise</a></div></div>`; }).join('');
-  drawGallery();
-}
-$('cards').onclick = e => { const k = e.target.dataset.fav; if (!k) return; favs = favs.includes(k) ? favs.filter(x => x !== k) : [...favs, k]; write('favs', favs); e.target.textContent = favs.includes(k) ? '♥' : '♡'; drawGallery() };
-function drawGallery() {
-  let n = 0;
-  document.querySelectorAll('.dc').forEach(d => {
-    const t = templates[d.dataset.k];
-    const ok = (cat === 'All' || t.cat === cat) && (!favOnly || favs.includes(d.dataset.k)) && t.label.toLowerCase().includes(term);
-    d.hidden = !ok; n += ok;
-  });
-  $('count').textContent = `${n} of ${entries.length}`; $('empty').hidden = n > 0;
-  document.querySelectorAll('#cats .chip').forEach(c => c.classList.toggle('on', c.dataset.c === cat));
-  thumbs(); $('favchip').textContent = `♥ Shortlist (${favs.length})`; $('favchip').classList.toggle('on', favOnly);
-  $('sl').hidden = !favs.length; $('slcount').textContent = `${favs.length} design${favs.length > 1 ? 's' : ''} shortlisted`;
-}
+    ${sc ? `<div class="lh" title="Lighthouse, measured ${sc.measured} (${sc.mode})">${pill("Perf", sc.performance)}${pill("A11y", sc.accessibility)}${pill("BP", sc.bestPractices)}${pill("SEO", sc.seo)}</div>` : ""}
+    <a class="go" href="#/d/${k}">Customise</a></div></div>`;
+        })
+        .join("");
+      drawGallery();
+    }
+    $("cards").onclick = (e) => {
+      const k = e.target.dataset.fav;
+      if (!k) return;
+      favs = favs.includes(k) ? favs.filter((x) => x !== k) : [...favs, k];
+      write("favs", favs);
+      e.target.textContent = favs.includes(k) ? "♥" : "♡";
+      drawGallery();
+    };
+    function drawGallery() {
+      let n = 0;
+      document.querySelectorAll(".dc").forEach((d) => {
+        const t = templates[d.dataset.k];
+        const ok =
+          (cat === "All" || t.cat === cat) &&
+          (!favOnly || favs.includes(d.dataset.k)) &&
+          t.label.toLowerCase().includes(term);
+        d.hidden = !ok;
+        n += ok;
+      });
+      $("count").textContent = `${n} of ${entries.length}`;
+      $("empty").hidden = n > 0;
+      document
+        .querySelectorAll("#cats .chip")
+        .forEach((c) => c.classList.toggle("on", c.dataset.c === cat));
+      thumbs();
+      $("favchip").textContent = `♥ Shortlist (${favs.length})`;
+      $("favchip").classList.toggle("on", favOnly);
+      $("sl").hidden = !favs.length;
+      $("slcount").textContent =
+        `${favs.length} design${favs.length > 1 ? "s" : ""} shortlisted`;
+    }
 
-/* ---------- customise: static controls ---------- */
-const btns = (el, obj, label, set) => { el.innerHTML = Object.entries(obj).map(([k, v]) => `<button data-k="${k}">${label(k, v)}</button>`).join(''); el.onclick = e => { const k = e.target.closest('button')?.dataset.k; if (k) { set(k); sync() } } };
-btns($('pre'), PRESETS, (k, p) => `<i class="dual" style="background:linear-gradient(135deg,${p.primary} 50%,${p.accent} 50%)"></i>${k}`, k => Object.assign(s, PRESETS[k]));
-btns($('font'), FONTS, (k, v) => `<i class="rd"></i><span style="font-family:${v.body}">${v.label}</span>`, k => s.font = k);
-btns($('radius'), RADII, k => k, k => s.radius = k);
-btns($('pages'), { home: 'Home', about: 'About', contact: 'Contact' }, (k, v) => v, k => { s.page = k; load() });
-$('primary').oninput = e => { s.primary = e.target.value; sync() };
-$('accent').oninput = e => { s.accent = e.target.value; sync() };
-const hexIn = (id, k) => $(id).oninput = e => { const v = e.target.value.trim(); if (/^#[0-9a-f]{6}$/i.test(v)) { s[k] = v.toLowerCase(); sync() } };
-hexIn('primaryHex', 'primary'); hexIn('accentHex', 'accent');
-const fields = () => document.querySelectorAll('[data-c]:is(input,textarea)');
-fields().forEach(i => i.oninput = () => { s.content[i.dataset.c] = i.value; sync() });
-document.querySelectorAll('[data-w]').forEach(b => b.onclick = () => { $('fw').style.width = b.dataset.w; document.querySelectorAll('[data-w]').forEach(x => x.classList.toggle('on', x === b)); thumbs() });
-new ResizeObserver(([e]) => { const { width, height } = e.contentRect; $('size').textContent = `${Math.round(width)} × ${Math.round(height)} px` }).observe(f);
-// Sliding highlight behind the active tab of every segmented control.
-function thumbs() {
-  document.querySelectorAll('.seg, .cats').forEach(c => {
-    const on = c.querySelector('button.on'); if (!on || !c.offsetParent) return;
-    let th = c.querySelector(':scope > .thumb'); if (!th) { th = document.createElement('i'); th.className = 'thumb'; c.prepend(th) }
-    const first = !th.style.width;                                       // first paint: jump into place, no slide
-    if (first) th.style.transition = 'none';
-    th.style.width = on.offsetWidth + 'px'; th.style.transform = `translateX(${on.offsetLeft}px)`;
-    if (first) { th.offsetWidth; th.style.transition = '' }
-  });
-}
-addEventListener('resize', thumbs);
-const fill = () => fields().forEach(i => i.value = s.content[i.dataset.c] ?? '');
+    /* ---------- customise: static controls ---------- */
+    const btns = (el, obj, label, set) => {
+      el.innerHTML = Object.entries(obj)
+        .map(([k, v]) => `<button data-k="${k}">${label(k, v)}</button>`)
+        .join("");
+      el.onclick = (e) => {
+        const k = e.target.closest("button")?.dataset.k;
+        if (k) {
+          set(k);
+          sync();
+        }
+      };
+    };
+    btns(
+      $("pre"),
+      PRESETS,
+      (k, p) =>
+        `<i class="dual" style="background:linear-gradient(135deg,${p.primary} 50%,${p.accent} 50%)"></i>${k}`,
+      (k) => Object.assign(s, PRESETS[k]),
+    );
+    btns(
+      $("font"),
+      FONTS,
+      (k, v) =>
+        `<i class="rd"></i><span style="font-family:${v.body}">${v.label}</span>`,
+      (k) => (s.font = k),
+    );
+    btns(
+      $("mode"),
+      MODES,
+      (k, v) => v,
+      (k) => (s.mode = k),
+    );
+    btns(
+      $("radius"),
+      RADII,
+      (k) => k,
+      (k) => (s.radius = k),
+    );
+    btns(
+      $("pages"),
+      { home: "Home", about: "About", contact: "Contact" },
+      (k, v) => v,
+      (k) => {
+        s.page = k;
+        load();
+      },
+    );
+    $("primary").oninput = (e) => {
+      s.primary = e.target.value;
+      sync();
+    };
+    $("accent").oninput = (e) => {
+      s.accent = e.target.value;
+      sync();
+    };
+    const hexIn = (id, k) =>
+      ($(id).oninput = (e) => {
+        const v = e.target.value.trim();
+        if (/^#[0-9a-f]{6}$/i.test(v)) {
+          s[k] = v.toLowerCase();
+          sync();
+        }
+      });
+    hexIn("primaryHex", "primary");
+    hexIn("accentHex", "accent");
+    const fields = () =>
+      document.querySelectorAll("[data-c]:is(input,textarea)");
+    fields().forEach(
+      (i) =>
+        (i.oninput = () => {
+          s.content[i.dataset.c] = i.value;
+          sync();
+        }),
+    );
+    document.querySelectorAll("[data-w]").forEach(
+      (b) =>
+        (b.onclick = () => {
+          $("fw").style.width = b.dataset.w;
+          document
+            .querySelectorAll("[data-w]")
+            .forEach((x) => x.classList.toggle("on", x === b));
+          thumbs();
+        }),
+    );
+    new ResizeObserver(([e]) => {
+      const { width, height } = e.contentRect;
+      $("size").textContent = `${Math.round(width)} × ${Math.round(height)} px`;
+    }).observe(f);
+    // Sliding highlight behind the active tab of every segmented control.
+    function thumbs() {
+      document.querySelectorAll(".seg, .cats").forEach((c) => {
+        const on = c.querySelector("button.on");
+        if (!on || !c.offsetParent) return;
+        let th = c.querySelector(":scope > .thumb");
+        if (!th) {
+          th = document.createElement("i");
+          th.className = "thumb";
+          c.prepend(th);
+        }
+        const first = !th.style.width; // first paint: jump into place, no slide
+        if (first) th.style.transition = "none";
+        th.style.width = on.offsetWidth + "px";
+        th.style.transform = `translateX(${on.offsetLeft}px)`;
+        if (first) {
+          th.offsetWidth;
+          th.style.transition = "";
+        }
+      });
+    }
+    addEventListener("resize", thumbs);
+    const fill = () =>
+      fields().forEach((i) => (i.value = s.content[i.dataset.c] ?? ""));
 
-/* logo */
-$('logoBtn').onclick = () => $('logoFile').click();
-$('logoFile').onchange = async e => {
-  try {
-    const { dataUrl, palette } = await loadLogo(e.target.files[0]);
-    s.logo = dataUrl;
-    if (palette) { s.primary = palette.primary; if (palette.accent) s.accent = palette.accent; $('logoNote').textContent = 'Colours picked from your logo. Adjust below if you like.' }
-    else $('logoNote').textContent = 'No distinct brand colour found in the logo, so colours are unchanged.';
-    sync();
-  } catch (err) { $('logoNote').textContent = err.message }
-  e.target.value = '';
-};
-$('logoDel').onclick = () => { s.logo = ''; $('logoNote').textContent = 'Upload a logo and we pick your colours from it.'; sync() };
+    /* logo */
+    $("logoBtn").onclick = () => $("logoFile").click();
+    $("logoFile").onchange = async (e) => {
+      try {
+        const { dataUrl, palette } = await loadLogo(e.target.files[0]);
+        s.logo = dataUrl;
+        if (palette) {
+          s.primary = palette.primary;
+          if (palette.accent) s.accent = palette.accent;
+          $("logoNote").textContent =
+            "Colours picked from your logo. Adjust below if you like.";
+        } else
+          $("logoNote").textContent =
+            "No distinct brand colour found in the logo, so colours are unchanged.";
+        sync();
+      } catch (err) {
+        $("logoNote").textContent = err.message;
+      }
+      e.target.value = "";
+    };
+    $("logoDel").onclick = () => {
+      s.logo = "";
+      $("logoNote").textContent =
+        "Upload a logo and we pick your colours from it.";
+      sync();
+    };
 
-/* section toggles + drag to reorder */
-const SEC = { services: 'Services', reviews: 'Reviews', faq: 'FAQ' };
-function drawSecs() {
-  $('secs').innerHTML = s.sections.order.map(k => `<div class="sec" draggable="true" tabindex="0" data-k="${k}" title="Drag to reorder"><span class="grip" aria-hidden="true">⠿</span><label><input type="checkbox" data-a="vis"${s.sections.hidden.includes(k) ? '' : ' checked'}> ${SEC[k]}</label></div>`).join('');
-}
-$('secs').onclick = e => {
-  const k = e.target.closest('.sec')?.dataset.k; if (e.target.dataset.a !== 'vis') return;
-  s.sections.hidden = e.target.checked ? s.sections.hidden.filter(x => x !== k) : [...s.sections.hidden, k]; sync();
-};
-// Drag: move the DOM row while dragging, read the order back on drop.
-// ponytail: native HTML5 drag-and-drop has no touch support; arrow keys on a focused row are the fallback.
-let dragEl = null;
-$('secs').ondragstart = e => { dragEl = e.target.closest('.sec'); if (!dragEl) return; e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', dragEl.dataset.k); setTimeout(() => dragEl.classList.add('drag')) };
-$('secs').ondragover = e => {
-  if (!dragEl) return; e.preventDefault();
-  const over = e.target.closest('.sec'); if (!over || over === dragEl) return;
-  const r = over.getBoundingClientRect(); over.parentNode.insertBefore(dragEl, e.clientY > r.top + r.height / 2 ? over.nextSibling : over);
-};
-$('secs').ondragend = () => { if (!dragEl) return; dragEl.classList.remove('drag'); s.sections.order = [...$('secs').children].map(r => r.dataset.k); dragEl = null; sync() };
-$('secs').onkeydown = e => {
-  const row = e.target.closest('.sec'); if (!row || !/^Arrow(Up|Down)$/.test(e.key)) return;
-  const o = s.sections.order, i = o.indexOf(row.dataset.k), j = i + (e.key === 'ArrowUp' ? -1 : 1);
-  if (j < 0 || j >= o.length) return; e.preventDefault(); [o[i], o[j]] = [o[j], o[i]]; drawSecs(); $('secs').children[j].focus(); sync();
-};
+    /* section toggles + drag to reorder */
+    const SEC = { services: "Services", reviews: "Reviews", faq: "FAQ" };
+    function drawSecs() {
+      $("secs").innerHTML = s.sections.order
+        .map(
+          (k) =>
+            `<div class="sec" draggable="true" tabindex="0" data-k="${k}" title="Drag to reorder"><span class="grip" aria-hidden="true">⠿</span><label><input type="checkbox" data-a="vis"${s.sections.hidden.includes(k) ? "" : " checked"}> ${SEC[k]}</label></div>`,
+        )
+        .join("");
+    }
+    $("secs").onclick = (e) => {
+      const k = e.target.closest(".sec")?.dataset.k;
+      if (e.target.dataset.a !== "vis") return;
+      s.sections.hidden = e.target.checked
+        ? s.sections.hidden.filter((x) => x !== k)
+        : [...s.sections.hidden, k];
+      sync();
+    };
+    // Drag: move the DOM row while dragging, read the order back on drop.
+    // ponytail: native HTML5 drag-and-drop has no touch support; arrow keys on a focused row are the fallback.
+    let dragEl = null;
+    $("secs").ondragstart = (e) => {
+      dragEl = e.target.closest(".sec");
+      if (!dragEl) return;
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", dragEl.dataset.k);
+      setTimeout(() => dragEl.classList.add("drag"));
+    };
+    $("secs").ondragover = (e) => {
+      if (!dragEl) return;
+      e.preventDefault();
+      const over = e.target.closest(".sec");
+      if (!over || over === dragEl) return;
+      const r = over.getBoundingClientRect();
+      over.parentNode.insertBefore(
+        dragEl,
+        e.clientY > r.top + r.height / 2 ? over.nextSibling : over,
+      );
+    };
+    $("secs").ondragend = () => {
+      if (!dragEl) return;
+      dragEl.classList.remove("drag");
+      s.sections.order = [...$("secs").children].map((r) => r.dataset.k);
+      dragEl = null;
+      sync();
+    };
+    $("secs").onkeydown = (e) => {
+      const row = e.target.closest(".sec");
+      if (!row || !/^Arrow(Up|Down)$/.test(e.key)) return;
+      const o = s.sections.order,
+        i = o.indexOf(row.dataset.k),
+        j = i + (e.key === "ArrowUp" ? -1 : 1);
+      if (j < 0 || j >= o.length) return;
+      e.preventDefault();
+      [o[i], o[j]] = [o[j], o[i]];
+      drawSecs();
+      $("secs").children[j].focus();
+      sync();
+    };
 
-/* actions */
-const spec = () => JSON.stringify({ template: s.key, ...shareable(s) }, null, 2);
-$('copy').onclick = () => navigator.clipboard.writeText(spec()).then(() => toast('Spec JSON copied'));
-$('dl').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([spec()], { type: 'application/json' })); a.download = `${s.key}-spec.json`; a.click(); URL.revokeObjectURL(a.href) };
-$('share').onclick = async () => {
-  const url = `${location.origin}${location.pathname}#/d/${s.key}?s=${await encodeState(shareable(s))}`;
-  try { await navigator.clipboard.writeText(url); toast(s.logo ? 'Link copied (logo is not included)' : 'Share link copied') } catch { prompt('Copy this link', url) }
-};
-$('print').onclick = () => { const w = open('', '_blank'); if (!w) return toast('Allow pop-ups to print the spec'); w.document.write(specHTML(s, templates[s.key])); w.document.close(); setTimeout(() => w.print(), 300) };
-$('reset').onclick = () => { s.content = clone(DEFAULT_CONTENT); s.services = clone(DEFAULT_SERVICES); s.sections = clone(DEFAULT_SECTIONS); fill(); drawSecs(); sync() };
-$('demo').onclick = () => $('dlg').showModal();
-$('dc').onclick = () => $('dlg').close();
-$('dform').onsubmit = () => {
-  const f = FONTS[s.font];
-  location.href = mailto(`Demo request: ${templates[s.key].label} design`, `Name: ${$('dn').value}\nPharmacy: ${$('dp').value || s.content.name}\n\nDesign: ${templates[s.key].label} (${templates[s.key].cat})\nPrimary: ${s.primary}\nAccent: ${s.accent}\nFont: ${f.label}\nCorners: ${s.radius}\nPhone: ${s.content.phone}\n`);
-};
+    /* actions */
+    const spec = () =>
+      JSON.stringify({ template: s.key, ...shareable(s) }, null, 2);
+    $("copy").onclick = () =>
+      navigator.clipboard
+        .writeText(spec())
+        .then(() => toast("Spec JSON copied"));
+    $("dl").onclick = () => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(
+        new Blob([spec()], { type: "application/json" }),
+      );
+      a.download = `${s.key}-spec.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    };
+    $("share").onclick = async () => {
+      const url = `${location.origin}${location.pathname}#/d/${s.key}?s=${await encodeState(shareable(s))}`;
+      try {
+        await navigator.clipboard.writeText(url);
+        toast(
+          s.logo ? "Link copied (logo is not included)" : "Share link copied",
+        );
+      } catch {
+        prompt("Copy this link", url);
+      }
+    };
+    $("print").onclick = () => {
+      const w = open("", "_blank");
+      if (!w) return toast("Allow pop-ups to print the spec");
+      w.document.write(specHTML(s, templates[s.key]));
+      w.document.close();
+      setTimeout(() => w.print(), 300);
+    };
+    $("reset").onclick = () => {
+      s.content = clone(DEFAULT_CONTENT);
+      s.services = clone(DEFAULT_SERVICES);
+      s.sections = clone(DEFAULT_SECTIONS);
+      fill();
+      drawSecs();
+      sync();
+    };
+    $("fixall").onclick = () => {
+      s.accent = fixAccent(s.accent);
+      sync();
+    };
+    let keepBrand = false;
+    const ddOpen = (o) => {
+      $("switchlist").hidden = !o;
+      $("switch").setAttribute("aria-expanded", o);
+      if (o) $("switchlist").querySelector('[aria-selected="true"]')?.scrollIntoView({ block: "nearest" });
+    };
+    const ddSet = (k) => {
+      $("switch").innerHTML = templates[k].label;
+      $("switchlist")
+        .querySelectorAll("button")
+        .forEach((b) => b.setAttribute("aria-selected", b.dataset.k === k));
+    };
+    $("switchlist").innerHTML = CATEGORIES.map(
+      (c) =>
+        `<h3>${c}</h3>${Object.entries(templates)
+          .filter(([, t]) => t.cat === c)
+          .map(([k, t]) => `<button type="button" role="option" data-k="${k}">${t.label}</button>`)
+          .join("")}`,
+    ).join("");
+    $("switch").onclick = () => ddOpen($("switchlist").hidden);
+    $("switchlist").onclick = (e) => {
+      const k = e.target.closest("button")?.dataset.k;
+      ddOpen(false);
+      if (k && k !== s.key) {
+        keepBrand = true;
+        location.hash = `#/d/${k}`;
+      }
+    };
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".dd")) ddOpen(false);
+    });
+    $("switch").addEventListener("keydown", (e) => e.key === "Escape" && ddOpen(false));
+    $("switchlist").addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        ddOpen(false);
+        $("switch").focus();
+      }
+    });
+    $("own").onclick = () => {
+      Object.assign(s, templates[s.key].theme, { mode: "light" });
+      sync();
+    };
+    $("demo").onclick = () => $("dlg").showModal();
+    $("dc").onclick = () => $("dlg").close();
+    $("dform").onsubmit = () => {
+      const f = FONTS[s.font];
+      location.href = mailto(
+        `Demo request: ${templates[s.key].label} design`,
+        `Name: ${$("dn").value}\nPharmacy: ${$("dp").value || s.content.name}\n\nDesign: ${templates[s.key].label} (${templates[s.key].cat})\nPrimary: ${s.primary}\nAccent: ${s.accent}\nFont: ${f.label}\nCorners: ${s.radius}\nPhone: ${s.content.phone}\n`,
+      );
+    };
 
-/* ---------- preview sync ---------- */
-const load = () => { f.src = `template.html?t=${s.key}&p=${s.page}`; sync() };
-const push = () => { const m = { vars: toVars(s), content: s.content, extra: { logo: s.logo, services: s.services, sections: s.sections } }; f.contentWindow?.postMessage(m, '*') };
-function sync() {
-  s.primary = fixPrimary(s.primary);                                   // AA auto-adjust
-  const cr = contrast(s.primary, '#ffffff');
-  $('primary').value = s.primary; $('accent').value = s.accent;
-  for (const [id, v] of [['primaryHex', s.primary], ['accentHex', s.accent]]) if (document.activeElement !== $(id)) $(id).value = v;
-  $('chk').className = 'chk' + (cr < 4.5 ? ' bad' : '');
-  $('chk').textContent = cr >= 4.5 ? `✓ Primary colour contrast ${cr.toFixed(1)}:1, passes AA` : `✗ Primary colour contrast ${cr.toFixed(1)}:1, fails AA`;
-  $('logoPrev').hidden = $('logoDel').hidden = !s.logo; if (s.logo) $('logoPrev').src = s.logo;
-  for (const [id, v] of [['font', s.font], ['radius', s.radius], ['pages', s.page]]) $(id).querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.k === v));
-  document.querySelectorAll('.grp').forEach(g => g.classList.toggle('show', g.dataset.g === 'all' || g.dataset.g === s.page));
-  $('title').textContent = `${templates[s.key].label} · ${s.page} page`;
-  save(); push(); thumbs();
-}
+    /* ---------- preview sync ---------- */
+    const load = () => {
+      f.src = `template.html?t=${s.key}&p=${s.page}`;
+      sync();
+    };
+    const push = () => {
+      const m = {
+        vars: toVars(s),
+        content: s.content,
+        extra: { logo: s.logo, services: s.services, sections: s.sections },
+      };
+      f.contentWindow?.postMessage(m, "*");
+    };
+    function sync() {
+      s.primary = fixPrimary(s.primary); // AA auto-adjust
+      $("primary").value = s.primary;
+      $("accent").value = s.accent;
+      for (const [id, v] of [
+        ["primaryHex", s.primary],
+        ["accentHex", s.accent],
+      ])
+        if (document.activeElement !== $(id)) $(id).value = v;
+      const rows = a11yChecks(s);
+      $("chk").innerHTML = rows
+        .map(
+          (r) =>
+            `<div class="chk${r.ratio < 4.5 ? " bad" : ""}">${r.ratio >= 4.5 ? "✓" : "✗"} ${r.label}<span>${r.ratio.toFixed(1)}:1</span></div>`,
+        )
+        .join("");
+      $("fixall").hidden = rows.every((r) => r.ratio >= 4.5);
+      $("logoPrev").hidden = $("logoDel").hidden = !s.logo;
+      if (s.logo) $("logoPrev").src = s.logo;
+      for (const [id, v] of [
+        ["font", s.font],
+        ["radius", s.radius],
+        ["mode", s.mode],
+        ["pages", s.page],
+      ])
+        $(id)
+          .querySelectorAll("button")
+          .forEach((b) => b.classList.toggle("on", b.dataset.k === v));
+      document
+        .querySelectorAll(".grp")
+        .forEach((g) =>
+          g.classList.toggle(
+            "show",
+            g.dataset.g === "all" || g.dataset.g === s.page,
+          ),
+        );
+      $("title").textContent = `${templates[s.key].label} · ${s.page} page`;
+      save();
+      push();
+      thumbs();
+    }
 
-/* ---------- router ---------- */
-async function route() {
-  const [path, qs] = location.hash.split('?'), m = path.match(/^#\/d\/(\w+)/), k = m && templates[m[1]] ? m[1] : null;
-  $('gallery').hidden = !!k; $('cust').hidden = !k;
-  if (!k) return drawGallery();
-  let shared = null;
-  const p = qs && new URLSearchParams(qs).get('s');
-  if (p) { try { shared = sanitizeShared(await decodeState(p)) } catch { toast('That share link could not be read') } history.replaceState(null, '', path) }
-  if (s.key !== k || shared) s = { ...s, key: k, page: 'home', ...templates[k].theme };   // new design = its default brand, keep content
-  if (shared) s = { ...s, ...shared, services: clone(DEFAULT_SERVICES) };
-  $('dname').textContent = templates[k].label; $('dblurb').textContent = templates[k].blurb;
-  fill(); drawSecs(); load();
-}
-addEventListener('hashchange', route);
+    /* ---------- router ---------- */
+    async function route() {
+      const [path, qs] = location.hash.split("?"),
+        m = path.match(/^#\/d\/(\w+)/),
+        k = m && templates[m[1]] ? m[1] : null;
+      $("gallery").hidden = !!k;
+      $("cust").hidden = !k;
+      if (!k) return drawGallery();
+      let shared = null;
+      const p = qs && new URLSearchParams(qs).get("s");
+      if (p) {
+        try {
+          shared = sanitizeShared(await decodeState(p));
+        } catch {
+          toast("That share link could not be read");
+        }
+        history.replaceState(null, "", path);
+      }
+      if (s.key !== k || shared)
+        s = { ...s, key: k, page: "home", ...(keepBrand ? {} : templates[k].theme) }; // new design = its default brand, unless switched from the customiser
+      keepBrand = false;
+      ddSet(k);
+      if (shared) s = { ...s, ...shared, services: clone(DEFAULT_SERVICES) };
+      $("dname").textContent = templates[k].label;
+      $("dblurb").textContent = templates[k].blurb;
+      fill();
+      drawSecs();
+      load();
+    }
+    addEventListener("hashchange", route);
 
-// iframes announce 'ready'; reply with the right theme. Thumbnails get their design's defaults.
-addEventListener('message', e => {
-  if (e.data?.type !== 'ready') return;
-  const fr = [...document.querySelectorAll('iframe')].find(i => i.contentWindow === e.source);
-  if (!fr) return;
-  if (fr.dataset.thumb !== undefined) e.source.postMessage({ vars: toVars(templates[fr.dataset.k].theme) }, '*');
-  else { s.page = e.data.page; sync() }                                // in-page nav links update the tab, push theme + content
-});
-drawCards(); route();
-</script>
+    // iframes announce 'ready'; reply with the right theme. Thumbnails get their design's defaults.
+    addEventListener("message", (e) => {
+      if (e.data?.type !== "ready") return;
+      const fr = [...document.querySelectorAll("iframe")].find(
+        (i) => i.contentWindow === e.source,
+      );
+      if (!fr) return;
+      if (fr.dataset.thumb !== undefined)
+        e.source.postMessage(
+          { vars: toVars(templates[fr.dataset.k].theme) },
+          "*",
+        );
+      else {
+        s.page = e.data.page;
+        sync();
+      } // in-page nav links update the tab, push theme + content
+    });
+    drawCards();
+    route();
+  </script>
+</html>

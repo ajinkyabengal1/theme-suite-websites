@@ -1,21 +1,48 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><title>Demo pharmacy website</title><meta name="description" content="Pharmacy website template preview: NHS and private services, booking and contact details."><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="base.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400..800&family=Nunito:wght@400..800&family=Plus+Jakarta+Sans:wght@400..800&family=Poppins:wght@400;600;700&display=swap"><body></body>
-<script type="module">
-import { render, templates, DEFAULT_CONTENT } from './templates.js';
-import { toVars } from './theme.js';
-const q = new URLSearchParams(location.search), key = templates[q.get('t')] ? q.get('t') : 'compass', page = q.get('p') || 'home';
-let C = DEFAULT_CONTENT, X = {};
-const draw = () => { document.body.innerHTML = render(key, page, C, X); document.title = `${C.name} | ${page}`; };
-draw();
-// ?theme=1 applies the design's own default brand (used by the Lighthouse run and for direct links).
-if (q.get('theme') && templates[key]) for (const [k, v] of Object.entries(toVars(templates[key].theme))) document.documentElement.style.setProperty(k, v);
-// Brand try-on + content channel (plan §5.4): shell posts CSS vars and page content.
-addEventListener('message', e => {
-  const { vars, content, extra } = e.data || {};
-  if (vars) for (const [k, v] of Object.entries(vars)) document.documentElement.style.setProperty(k, v);
-  if (content) C = { ...DEFAULT_CONTENT, ...content };
-  if (extra) X = extra;
-  if (content || extra) draw();
-});
-parent.postMessage({ type: 'ready', page }, '*');
-</script>
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><title>Demo pharmacy website</title
+  ><meta
+    name="description"
+    content="Pharmacy website template preview: NHS and private services, booking and contact details."
+  /><link rel="icon" href="data:," /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  />
+  <link rel="stylesheet" href="base.css" /><link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400..800&family=Nunito:wght@400..800&family=Plus+Jakarta+Sans:wght@400..800&family=Poppins:wght@400;600;700&display=swap"
+  />
+  <body></body>
+  <script type="module">
+    import { render, templates, DEFAULT_CONTENT } from "./templates.js";
+    import { toVars } from "./theme.js";
+    const q = new URLSearchParams(location.search),
+      key = templates[q.get("t")] ? q.get("t") : "compass",
+      page = q.get("p") || "home";
+    let C = DEFAULT_CONTENT,
+      X = {};
+    const draw = () => {
+      document.body.innerHTML = render(key, page, C, X);
+      document.title = `${C.name} | ${page}`;
+    };
+    draw();
+    // ?theme=1 applies the design's own default brand (used by the Lighthouse run and for direct links).
+    if (q.get("theme") && templates[key])
+      for (const [k, v] of Object.entries(toVars(templates[key].theme)))
+        document.documentElement.style.setProperty(k, v);
+    // Brand try-on + content channel (plan §5.4): shell posts CSS vars and page content.
+    addEventListener("message", (e) => {
+      const { vars, content, extra } = e.data || {};
+      if (vars)
+        for (const [k, v] of Object.entries(vars))
+          document.documentElement.style.setProperty(k, v);
+      if (content) C = { ...DEFAULT_CONTENT, ...content };
+      if (extra) X = extra;
+      if (content || extra) draw();
+    });
+    parent.postMessage({ type: "ready", page }, "*");
+  </script>
+</html>

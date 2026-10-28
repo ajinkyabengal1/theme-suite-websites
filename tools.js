@@ -1,5 +1,5 @@
 // Shell helpers: logo upload + colour pick, share-link encoding, printable spec sheet.
-import { FONTS, RADII } from './theme.js';
+import { FONTS, RADII, MODES } from './theme.js';
 import { DEFAULT_CONTENT, DEFAULT_SECTIONS, IMG_LIB } from './templates.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -54,7 +54,7 @@ export async function decodeState(str) {
   const bytes = Uint8Array.from(atob(str.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
   return JSON.parse(new TextDecoder().decode(await pipe(bytes, new DecompressionStream('deflate-raw'))));
 }
-export const shareable = s => ({ primary: s.primary, accent: s.accent, font: s.font, radius: s.radius, content: s.content, services: s.services, sections: s.sections });
+export const shareable = s => ({ primary: s.primary, accent: s.accent, font: s.font, radius: s.radius, mode: s.mode, content: s.content, services: s.services, sections: s.sections });
 
 // Never trust a link: copy only known fields with known shapes.
 export function sanitizeShared(o) {
@@ -63,6 +63,7 @@ export function sanitizeShared(o) {
   if (hex(o.accent)) out.accent = o.accent;
   if (o.font in FONTS) out.font = o.font;
   if (o.radius in RADII) out.radius = o.radius;
+  if (o.mode in MODES) out.mode = o.mode;
   if (o.content && typeof o.content === 'object') out.content = Object.fromEntries(Object.keys(DEFAULT_CONTENT).map(k => [k, String(o.content[k] ?? DEFAULT_CONTENT[k]).slice(0, 2000)]));
   if (Array.isArray(o.services)) out.services = o.services.slice(0, 8).map(s => ({
     tag: s.tag === 'Private' ? 'Private' : 'NHS', title: String(s.title ?? '').slice(0, 80), desc: String(s.desc ?? '').slice(0, 200),
@@ -90,7 +91,7 @@ h1{font-size:28px;margin:0 0 4px;color:${esc(s.primary)}}h2{font-size:11px;lette
 <div class="top"><div><h1>${esc(C.name)}</h1><div>Website design specification</div></div>${s.logo?.startsWith('data:image/') ? `<img src="${s.logo}" alt="Logo">` : ''}</div>
 <h2>Design</h2><p><b>${esc(t.label)}</b> · ${esc(t.cat)} · <small>${esc(t.blurb)}</small></p>
 <h2>Brand</h2>${sw('Primary', s.primary)}${sw('Accent', s.accent)}
-<p style="margin-top:10px"><b>Font:</b> ${esc(f.label)} &nbsp; <b>Corners:</b> ${esc(s.radius)}</p>
+<p style="margin-top:10px"><b>Font:</b> ${esc(f.label)} &nbsp; <b>Corners:</b> ${esc(s.radius)} &nbsp; <b>Mode:</b> ${esc(s.mode || 'light')}</p>
 <h2>Contact details</h2><div class="two"><div><b>Phone</b><br>${esc(C.phone)}</div><div><b>Email</b><br>${esc(C.email)}</div><div><b>Address</b><br>${esc(C.address)}</div><div><b>Hours</b><br>${esc(C.hours)}</div></div>
 <h2>Home page</h2><p><b>Headline:</b> ${esc(C.tagline)}</p><p><b>Sections:</b> Hero, ${shown.map(k => ({ services: 'Services', reviews: 'Reviews', faq: 'FAQ' }[k])).join(', ') || 'none'}</p>
 <h2>Services (${s.services.length})</h2><ul>${s.services.map(v => `<li><b>${esc(v.title)}</b> <small>${esc(v.tag)}</small> – ${esc(v.desc)}</li>`).join('')}</ul>

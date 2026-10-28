@@ -8,6 +8,9 @@ Proof of the v2 theme-template plan (`v2-pharmacy-theme-templates-plan.pdf`). No
 ## Features
 - **Gallery:** 15 designs, category filter, search, live thumbnails, shortlist (heart) with an enquiry email, measured Lighthouse scores per design
 - **Customiser:** brand presets, colour pickers with WCAG AA check/auto-fix, 7 font presets, corner presets
+- **Switch design:** change layout from the customiser and keep brand, logo and content
+- **Light / dark mode:** surface and text tokens switch, brand text is lightened to stay AA on dark
+- **Accessibility report:** 5 colour pairings checked live, one-click fix for the CTA label
 - **Logo upload:** shown in header/footer, and primary/accent are picked from it
 - **Content editor:** Home (headline, section toggles + order), About, Contact
 - **Share / export:** copy a share link (logo not included), print or save a branded PDF spec, download or copy JSON, "Book a demo" email
