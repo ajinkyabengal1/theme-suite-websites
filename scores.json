@@ -1,0 +1,122 @@
+{
+  "anchor": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "aurora": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "beacon": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "compass": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "harbour": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "haven": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "ivory": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "linden": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "nova": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "orchard": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "pulse": {
+    "performance": 99,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "quill": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "sable": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "slate": {
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  },
+  "vertex": {
+    "performance": 99,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "measured": "2026-10-27",
+    "mode": "Lighthouse 13, desktop, local static server"
+  }
+}

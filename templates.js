@@ -17,14 +17,24 @@ const ini = n => n.replace(/&\w+;/g, '').split(' ').map(w => w[0]).slice(0, 2).j
 const img = (f, alt = '') => `<img class="pic" src="img/${f}" alt="${alt}" loading="lazy">`;
 const IMG = { hero: 'hero-bg.jpeg', consult: 'about-1.jpeg', checks: 'about-2.jpeg', happy: 'about-cta-bg.jpeg', travel: 'travel.jpeg', ear: 'ear-wax.jpeg', weight: 'weight-loss.jpeg' };
 
-const SVC = [
-  ['NHS', 'Pharmacy First', 'Treatment for 7 common conditions, no GP visit.', IMG.consult],
-  ['NHS', 'Repeat Prescriptions', 'Order online, collect or have it delivered.', IMG.hero],
-  ['NHS', 'Health Checks', 'Blood pressure and wellbeing checks, walk-ins welcome.', IMG.checks],
-  ['Private', 'Travel Clinic', 'Vaccines and malaria advice before you go.', IMG.travel],
-  ['Private', 'Weight Management', 'Clinician-led programme with ongoing support.', IMG.weight],
-  ['Private', 'Ear Wax Removal', 'Quick, safe microsuction in-store.', IMG.ear],
+export const IMG_LIB = [
+  { file: 'about-1.jpeg', label: 'Consultation' }, { file: 'hero-bg.jpeg', label: 'Pharmacist and customer' },
+  { file: 'about-2.jpeg', label: 'Health check' }, { file: 'travel.jpeg', label: 'Travel' },
+  { file: 'weight-loss.jpeg', label: 'Weight management' }, { file: 'ear-wax.jpeg', label: 'Ear care' },
+  { file: 'about-cta-bg.jpeg', label: 'Happy patients' },
 ];
+export const DEFAULT_SERVICES = [
+  { tag: 'NHS', title: 'Pharmacy First', desc: 'Treatment for 7 common conditions, no GP visit.', img: IMG.consult },
+  { tag: 'NHS', title: 'Repeat Prescriptions', desc: 'Order online, collect or have it delivered.', img: IMG.hero },
+  { tag: 'NHS', title: 'Health Checks', desc: 'Blood pressure and wellbeing checks, walk-ins welcome.', img: IMG.checks },
+  { tag: 'Private', title: 'Travel Clinic', desc: 'Vaccines and malaria advice before you go.', img: IMG.travel },
+  { tag: 'Private', title: 'Weight Management', desc: 'Clinician-led programme with ongoing support.', img: IMG.weight },
+  { tag: 'Private', title: 'Ear Wax Removal', desc: 'Quick, safe microsuction in-store.', img: IMG.ear },
+];
+// Layouts that only have room for the first N services.
+export const serviceLimit = key => ({ bento: 5, editorial: 4 }[templates[key].services] ?? Infinity);
+export const DEFAULT_SECTIONS = { order: ['services', 'reviews', 'faq'], hidden: [] };
+const safeImg = f => IMG_LIB.some(i => i.file === f) ? f : IMG_LIB[0].file;
 const FAQS = [
   ['Do I need an appointment?', 'Most services accept walk-ins, but booking online guarantees a time slot and a shorter wait.'],
   ['What is Pharmacy First?', 'An NHS service where we assess and treat seven common conditions, such as sore throat and earache, without a GP appointment.'],
@@ -33,7 +43,10 @@ const FAQS = [
   ['How do I transfer my prescription to you?', 'Nominate us through the NHS App or tell any member of our team. We will do the rest.'],
 ];
 const lnk = (x, p) => `template.html?t=${x.k}&p=${p}`;
-const logo = x => { const [a, ...b] = x.C.name.trim().split(' '); return `<a class="logo" href="${lnk(x, 'home')}">${esc(a)}${b.length ? `<b>.</b>${esc(b.join(' '))}` : ''}</a>`; };
+const logo = x => {
+  if (x.X.logo?.startsWith('data:image/')) return `<a class="logo" href="${lnk(x, 'home')}"><img src="${x.X.logo}" alt="${esc(x.C.name)}" style="height:40px;width:auto;display:block;background:#fff;border-radius:6px;padding:2px 6px"></a>`;
+  const [a, ...b] = x.C.name.trim().split(' '); return `<a class="logo" href="${lnk(x, 'home')}">${esc(a)}${b.length ? `<b>.</b>${esc(b.join(' '))}` : ''}</a>`;
+};
 const nav = x => `<nav><a href="${lnk(x, 'home')}">Home</a><a href="${lnk(x, 'about')}">About</a><a href="${lnk(x, 'contact')}">Contact</a></nav>`;
 const cta = x => `<a class="btn cta" href="${lnk(x, 'contact')}">Book now</a>`;
 const book = () => `<div class="card" style="box-shadow:0 12px 40px rgb(0 0 0/.18);color:var(--ink)"><div class="grid g3" style="align-items:end">
@@ -42,11 +55,11 @@ const book = () => `<div class="card" style="box-shadow:0 12px 40px rgb(0 0 0/.1
 const contactStrip = C => `<div class="grid g3 light" style="padding:20px;border-radius:var(--radius-card)"><div><b>Call</b><br>${esc(C.phone)}</div><div><b>Visit</b><br>${esc(C.address)}</div><div><b>Open</b><br>${esc(C.hours)}</div></div>`;
 const h1 = (C, s = 48) => `<h1 style="font-size:${s}px;max-width:640px;margin:10px 0 24px">${esc(C.tagline)}</h1>`;
 const faqItems = n => FAQS.slice(0, n).map(([q, a], i) => `<details${i ? '' : ' open'}><summary>${q}</summary><p>${a}</p></details>`).join('');
-const sCard = s => `<div class="scard"><div class="simg">${img(s[3], s[1])}</div><div class="b"><span class="tag">${s[0]}</span><h3>${s[1]}</h3><p class="muted">${s[2]}</p></div></div>`;
-const ovl = s => `<div class="ovl">${img(s[3], s[1])}<div class="t"><span class="tag" style="color:#fff;opacity:.8">${s[0]}</span><h3>${s[1]}</h3><p style="opacity:.85;font-size:14px">${s[2]}</p></div></div>`;
-const colsLinks = x => `<div><h4>Services</h4><a href="${lnk(x, 'home')}">Pharmacy First</a><a href="${lnk(x, 'home')}">Prescriptions</a><a href="${lnk(x, 'home')}">Travel Clinic</a></div>
-  <div><h4>Company</h4><a href="${lnk(x, 'about')}">About us</a><a href="${lnk(x, 'contact')}">Contact</a><a href="#">Privacy</a></div>
-  <div><h4>Visit</h4><p>${esc(x.C.address)}</p><p>${esc(x.C.phone)}</p><p>${esc(x.C.hours)}</p></div>`;
+const sCard = s => `<div class="scard"><div class="simg">${img(safeImg(s.img), esc(s.title))}</div><div class="b"><span class="tag">${esc(s.tag)}</span><h3>${esc(s.title)}</h3><p class="muted">${esc(s.desc)}</p></div></div>`;
+const ovl = s => `<div class="ovl">${img(safeImg(s.img), esc(s.title))}<div class="t"><span class="tag" style="color:#fff;opacity:.8">${esc(s.tag)}</span><h3>${esc(s.title)}</h3><p style="opacity:.85;font-size:14px">${esc(s.desc)}</p></div></div>`;
+const colsLinks = x => `<div><p class="fh">Services</p><a href="${lnk(x, 'home')}">Pharmacy First</a><a href="${lnk(x, 'home')}">Prescriptions</a><a href="${lnk(x, 'home')}">Travel Clinic</a></div>
+  <div><p class="fh">Company</p><a href="${lnk(x, 'about')}">About us</a><a href="${lnk(x, 'contact')}">Contact</a><a href="#">Privacy</a></div>
+  <div><p class="fh">Visit</p><p>${esc(x.C.address)}</p><p>${esc(x.C.phone)}</p><p>${esc(x.C.hours)}</p></div>`;
 
 export const variants = {
   header: {
@@ -63,11 +76,11 @@ export const variants = {
     split: ({ C }) => `<section class="light hero-pad"><div class="wrap grid g2" style="align-items:center;gap:40px"><div><span class="tag">Welcome</span>${h1(C, 46)}<a class="btn" href="#">Book now</a></div><div style="position:relative"><div class="frame-img" style="min-height:400px">${img(IMG.consult, 'Pharmacist helping a customer')}</div><div class="card" style="position:absolute;left:-24px;bottom:-24px;box-shadow:0 12px 30px #0003;max-width:260px"><b>Visit us</b><p style="margin:4px 0">${esc(C.address)}</p><p class="muted">${esc(C.hours)}</p></div></div></div></section>`,
   },
   services: {
-    grid: () => `<section class="sec"><div class="wrap"><h2 style="margin-bottom:24px">NHS &amp; private services</h2><div class="grid g3">${SVC.map(sCard).join('')}</div></div></section>`,
-    cards: () => `<section class="sec"><div class="wrap"><h2 style="margin-bottom:24px">Our services</h2><div class="grid g3">${SVC.map(sCard).join('')}</div></div></section>`,
-    bento: () => `<section class="sec"><div class="wrap"><h2 style="margin-bottom:24px">What we do</h2><div class="grid bento">${SVC.slice(0, 5).map(ovl).join('')}</div></div></section>`,
-    list: () => `<section class="sec"><div class="wrap" style="max-width:720px"><h2 style="margin-bottom:12px;font-weight:400">Services</h2>${SVC.map(s => `<div class="row" style="align-items:center"><span style="width:72px;height:56px;flex:none;border-radius:var(--radius-card);overflow:hidden">${img(s[3], s[1])}</span><span style="flex:1"><b>${s[1]}</b><br><span class="muted">${s[2]}</span></span><span class="muted">${s[0]}</span></div>`).join('')}</div></section>`,
-    editorial: () => `<section class="sec"><div class="wrap">${SVC.slice(0, 4).map((s, i) => `<div class="grid g2" style="align-items:center;gap:48px;margin-bottom:56px"><div class="frame-img" style="min-height:280px;order:${i % 2}">${img(s[3], s[1])}</div><div><span style="font:var(--font-weight-heading) 40px var(--font-heading);color:var(--color-brand-accent)">0${i + 1}</span><h3 style="font-size:30px;margin:6px 0 8px">${s[1]}</h3><p class="muted" style="margin-bottom:16px">${s[2]}</p><a class="btn ghost" href="#">Learn more</a></div></div>`).join('')}</div></section>`,
+    grid: x => `<section class="sec"><div class="wrap"><h2 style="margin-bottom:24px">NHS &amp; private services</h2><div class="grid g3">${x.X.services.map(sCard).join('')}</div></div></section>`,
+    cards: x => `<section class="sec"><div class="wrap"><h2 style="margin-bottom:24px">Our services</h2><div class="grid g3">${x.X.services.map(sCard).join('')}</div></div></section>`,
+    bento: x => `<section class="sec"><div class="wrap"><h2 style="margin-bottom:24px">What we do</h2><div class="grid bento">${x.X.services.slice(0, 5).map(ovl).join('')}</div></div></section>`,
+    list: x => `<section class="sec"><div class="wrap" style="max-width:720px"><h2 style="margin-bottom:12px;font-weight:400">Services</h2>${x.X.services.map(s => `<div class="row" style="align-items:center"><span style="width:72px;height:56px;flex:none;border-radius:var(--radius-card);overflow:hidden">${img(safeImg(s.img), esc(s.title))}</span><span style="flex:1"><b>${esc(s.title)}</b><br><span class="muted">${esc(s.desc)}</span></span><span class="muted">${esc(s.tag)}</span></div>`).join('')}</div></section>`,
+    editorial: x => `<section class="sec"><div class="wrap">${x.X.services.slice(0, 4).map((s, i) => `<div class="grid g2" style="align-items:center;gap:48px;margin-bottom:56px"><div class="frame-img" style="min-height:280px;order:${i % 2}">${img(safeImg(s.img), esc(s.title))}</div><div><span style="font:var(--font-weight-heading) 40px var(--font-heading);color:var(--color-brand-accent-text)">0${i + 1}</span><h2 style="font-size:30px;margin:6px 0 8px">${esc(s.title)}</h2><p class="muted" style="margin-bottom:16px">${esc(s.desc)}</p><a class="btn ghost" href="#">Learn more</a></div></div>`).join('')}</div></section>`,
   },
   reviews: ({ C }) => `<section class="sec light"><div class="wrap"><h2 style="margin-bottom:24px">What patients say</h2><div class="grid g3">${[['Quick, kind and so helpful.', 'Maria K.'], ['Booked Pharmacy First in minutes.', 'David R.'], ['Best pharmacy team around.', 'Priya S.']].map(([q, n]) => `<div class="card"><div class="stars">★★★★★</div><p style="margin-top:8px">“${q}”</p><div class="who"><span class="avatar">${ini(n)}</span><div><b>${n}</b><br><span class="muted" style="font-size:13px">${esc(C.name)} patient</span></div></div></div>`).join('')}</div></div></section>`,
   faq: {
@@ -80,7 +93,7 @@ export const variants = {
     dark: x => `<footer><div class="bgimg cta-band" style="background-image:url(img/${IMG.happy})"><div class="wrap"><h2>Ready to book your visit?</h2><p>Same-day appointments available at ${esc(x.C.name)}.</p><a class="btn cta" href="${lnk(x, 'contact')}">Book now</a></div></div>
       <div class="dark"><div class="wrap"><div class="fcols"><div>${logo(x)}<p style="margin-top:10px">Caring for our community.</p></div>${colsLinks(x)}</div><div class="fbar"><span>© ${esc(x.C.name)}</span><span>Registered pharmacy</span></div></div></div></footer>`,
     // photo panel beside link columns
-    light: x => `<footer class="light photo"><div class="pimg">${img(IMG.happy, 'Happy patients')}</div><div class="wrap" style="padding:0 40px"><div class="fcols" style="grid-template-columns:1fr 1fr;padding-bottom:16px"><div>${logo(x)}<p class="muted" style="margin-top:10px">${esc(x.C.address)}</p></div><div><h4>Visit</h4><p>${esc(x.C.phone)}</p><p>${esc(x.C.hours)}</p><a href="${lnk(x, 'contact')}" style="font-weight:700">Book now →</a></div></div><div class="fbar muted"><span>© ${esc(x.C.name)}</span><span>${esc(x.C.phone)}</span></div></div></footer>`,
+    light: x => `<footer class="light photo"><div class="pimg">${img(IMG.happy, 'Happy patients')}</div><div class="wrap" style="padding:0 40px"><div class="fcols" style="grid-template-columns:1fr 1fr;padding-bottom:16px"><div>${logo(x)}<p class="muted" style="margin-top:10px">${esc(x.C.address)}</p></div><div><p class="fh">Visit</p><p>${esc(x.C.phone)}</p><p>${esc(x.C.hours)}</p><a href="${lnk(x, 'contact')}" style="font-weight:700">Book now →</a></div></div><div class="fbar muted"><span>© ${esc(x.C.name)}</span><span>${esc(x.C.phone)}</span></div></div></footer>`,
     // slim bar with thumbnail strip
     minimal: x => `<footer><div style="height:160px;position:relative">${img(IMG.happy, 'Happy patients').replace('class="pic"', 'class="pic" style="border-radius:0"')}</div><div class="wrap muted" style="border-top:1px solid var(--line)"><span>© ${esc(x.C.name)}</span><span>${esc(x.C.address)}</span><span>${esc(x.C.phone)}</span></div></footer>`,
   },
@@ -122,9 +135,12 @@ export const templates = {
   anchor: T('Anchor', 'Service', 'Appointments and Pharmacy First, no clutter.', 'centered', 'booking', 'grid', 'cards', 'dark', 'story', 'split', th('#0a3238', '#2cb5a0', 'clean', 'round')),
 };
 
-export const render = (key, page, C) => {
-  const t = templates[key], x = { C, k: key };
-  const body = page === 'about' ? variants.about[t.about](x) : page === 'contact' ? variants.contact[t.contact](x)
-    : variants.hero[t.hero](x) + variants.services[t.services](x) + variants.reviews(x) + variants.faq[t.faq](x);
-  return variants.header[t.header](x) + body + variants.footer[t.footer](x);
+export const render = (key, page, C, X = {}) => {
+  const t = templates[key];
+  X = { logo: '', services: DEFAULT_SERVICES, sections: DEFAULT_SECTIONS, ...X };
+  const x = { C, k: key, X };
+  const parts = { services: () => variants.services[t.services](x), reviews: () => variants.reviews(x), faq: () => variants.faq[t.faq](x) };
+  const home = variants.hero[t.hero](x) + (X.sections.order || []).filter(k => parts[k] && !(X.sections.hidden || []).includes(k)).map(k => parts[k]()).join('');
+  const body = page === 'about' ? variants.about[t.about](x) : page === 'contact' ? variants.contact[t.contact](x) : home;
+  return variants.header[t.header](x) + `<main>${body}</main>` + variants.footer[t.footer](x);
 };
